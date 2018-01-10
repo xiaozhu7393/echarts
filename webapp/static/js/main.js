@@ -91,7 +91,6 @@ $(function (){
 			        text: '收件热点区域Top 5 预测',
 			        x:'center',
         			y:'top',
-			        textAlign:'center',
 			        textStyle : {
 			            color: '#fff'
 			        }
@@ -110,6 +109,15 @@ $(function (){
 			    xAxis : [
 			        {
 			            type : 'value',
+			            splitLine :{
+			            	show:true,
+			            	lineStyle:{
+								color: '#534d49',//网格线颜色
+								width: 1,//网格线宽度
+								type: 'dashed'//网格线样式
+							},
+			            },
+			            
 			            boundaryGap : [0, 0.01],
 			            axisLabel:{  
 		                    margin:5,  
@@ -137,7 +145,11 @@ $(function (){
 			       
 			        {
 			            type:'bar',
-			            data:[12, 34, 50, 88, 100]
+			            data:[12, 34, 50, 88, 100],
+			            itemStyle:{
+                    		normal:{color:'#126ff8'}
+                		}
+			            
 			        }
 			    ]
 			};
@@ -154,6 +166,12 @@ $(function (){
 			            color: '#fff'
 			        }
 			    },
+			    grid: {
+				    left: '2%',
+					right: '2%',
+					bottom: '3%',
+					containLabel: true
+				},
 			    tooltip : {
 			        trigger: 'axis'
 			    },
@@ -175,6 +193,14 @@ $(function (){
 			    yAxis : [
 			        {
 			            type : 'value',
+			            splitLine :{
+			            	show:true,
+			            	lineStyle:{
+								color: '#534d49',//网格线颜色
+								width: 1,//网格线宽度
+								type: 'dashed'//网格线样式
+							},
+			            },
 			            axisLabel : {
 			                formatter: '{value}',
 			                margin:5,  
@@ -189,7 +215,10 @@ $(function (){
 			
 			        {
 			            type:'line',
-			            data:[6.3, 6.0, 5.7, 5.9, 5.9, 6.1, 6.0]
+			            data:[6.3, 6.0, 5.7, 5.9, 5.9, 6.1, 6.0],
+			            itemStyle:{
+			                normal:{color:'#58f4e6'}
+			            }
 			            
 			           
 			        }
@@ -488,6 +517,12 @@ $(function (){
 			            color: '#fff'
 			        }
 			    },
+			    grid: {
+				    left: '2%',
+					right: '2%',
+					bottom: '3%',
+					containLabel: true
+				},
 			    tooltip : {
 			        formatter: "{a} <br/>{b} : {c}%"
 			    },
@@ -519,6 +554,12 @@ $(function (){
 			            color: '#fff'
 			        }
 			    },
+			    grid: {
+				    left: '2%',
+					right: '2%',
+					bottom: '3%',
+					containLabel: true
+				},
 			    tooltip : {
 			        trigger: 'axis'
 			    },
@@ -529,7 +570,7 @@ $(function (){
 			            data : ['unattended','Delivered','Pickup'],
 			            axisLabel:{  
 		                    interval:0,  
-		                    rotate:45,//倾斜度 -90 至 90 默认为0  
+		                    rotate:-45,//倾斜度 -90 至 90 默认为0  
 		                    margin:5,  
 		                    textStyle:{  
 		                        fontWeight:"bolder",  
@@ -541,6 +582,14 @@ $(function (){
 			    yAxis : [
 			        {
 			            type : 'value',
+			            splitLine :{
+			            	show:true,
+			            	lineStyle:{
+								color: '#534d49',//网格线颜色
+								width: 1,//网格线宽度
+								type: 'dashed'//网格线样式
+							},
+			            },
 			            axisLabel:{  
 		                    margin:5,  
 		                    textStyle:{  
@@ -554,7 +603,10 @@ $(function (){
 			        {
 			            type:'bar',
 			            barWidth:30,
-			            data:["100",'200','300']
+			            data:["100",'200','300'],
+			            itemStyle:{
+			                normal:{color:'#358be3'}
+			            }
 			        }
 			    ]
 			};
@@ -572,6 +624,12 @@ $(function (){
 			            color: '#fff'
 			        }
 			    },
+			    grid: {
+				    left: '2%',
+					right: '2%',
+					bottom: '3%',
+					containLabel: true
+				},
 			    tooltip : {
 			        trigger: 'axis'
 			    },
@@ -593,6 +651,14 @@ $(function (){
 			    yAxis : [
 			        {
 			            type : 'value',
+			            splitLine :{
+			            	show:true,
+			            	lineStyle:{
+								color: '#534d49',//网格线颜色
+								width: 1,//网格线宽度
+								type: 'dashed'//网格线样式
+							},
+			            },
 			            axisLabel : {
 			                formatter: '{value}',
 			                margin:5,  
@@ -607,7 +673,10 @@ $(function (){
 			
 			        {
 			            type:'line',
-			            data:[3100, 2900, 3117, 3019, 3004, 3008]
+			            data:[3100, 2900, 3117, 3019, 3004, 3008],
+			            itemStyle:{
+			                normal:{color:'#58f4e6'}
+			            }
 			            
 			           
 			        }
