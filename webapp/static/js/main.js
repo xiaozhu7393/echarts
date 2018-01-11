@@ -71,11 +71,18 @@ $(function (){
 			                        }  
 			                    }  
 			                }  
-			            },  
+			            }, 
+			            label:{
+			            	normal:{
+			            		textStyle:{
+			            			fontSize:10,
+			            			color:"#fff"
+			            		}
+			            	}
+			            },
 			            data:[
 			                {value:33, name:'SWOT Carrier'},
 			                {value:310, name:'Reqular Carrier'}
-			                
 			            ]
 			        }
 			    ]
@@ -526,21 +533,18 @@ $(function (){
 			    tooltip : {
 			        formatter: "{a} <br/>{b} : {c}%"
 			    },
-			    series : [
-			        {
-			            name:'业务指标',
-			            type:'gauge',
-			            detail : {formatter:'{value}%'},
-			            data:[{value: 50}]
-			        }
-			    ]
+			    series: [{
+			        type: 'liquidFill',
+			        data: [1.0],
+			        radius: '75%'
+			    }]
 			};
 	
-			clearInterval(timeTicket);
-			var timeTicket = setInterval(function (){
-			    option.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;
-			    myChart.setOption(option, true);
-			},2000);
+//			clearInterval(timeTicket);
+//			var timeTicket = setInterval(function (){
+//			    option.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;
+//			    myChart.setOption(option, true);
+//			},2000);
 		myChart.setOption(option);
 	}());
          

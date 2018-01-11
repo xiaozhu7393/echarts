@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+    *{margin:0;padding:0;}
+    li{list-style:none;}
+    canvas{background-color:black;}
+    </style>
+</head>
+<body>
+<canvas id='canvas' width=800 height=600></canvas>
+   <script>
+      var canvas=document.querySelector('canvas'),
+              context=canvas.getContext('2d'),
+              r=0;
+
+      var coor = [
+      {
+          "name":"start",
+          "X":100,
+          "Y":100
+      },{
+          "name":"end",
+          "X":500,
+          "Y":500
+      }
+      ];
+
+     //圆环
+      function change(context,r,option){
+          context.clearRect((r<option.X?option.X-r:0),(r<option.X?option.X-r:0),r*2,r*2);
+
+          //圆
+          context.beginPath();
+          context.arc(option.X,option.Y,r+=2,0,2*Math.PI);
+          context.closePath();
+          context.lineWidth = 4;
+          context.strokeStyle='rgba(255,0,0,'+(r>70?0:10/r)+')';
+          context.stroke();
+
+          //开启动画
+              var animationCouned = window.requestAnimationFrame(function(){
+                 change(context,r,option)  
+                });
+
+              //清除动画和画布
+                if(r>=100){
+                  window.cancelAnimationFrame(animationCouned);
+                  context.clearRect(0,0,r,r);
+                  r=0;
+              }
+      }
+      var speed = 10,
+              l = 0,
+              end = coor[1].X;
+      function lines(context,l){
+
+        context.clearRect(0,0,800,600);
+        l += speed;
+
+        context.beginPath(); 
+context.strokeStyle="rgba(255,0,0,1)";/*设置边框*/ 
+context.fillStyle="rgba(255,0,0,1)";
+context.lineWidth=1;/*边框的宽度*/
+context.beginPath(); 
+context.moveTo((l<60?100:l+40),(l<60?100:l+40));
+context.lineTo((l<(end-100)?(l+100):end),(l<(end-98)?(l+98):end)); 
+context.lineTo((l<(end-98)?(l+98):end),(l<(end-100)?(l+100):end)); 
+context.closePath();/*可选步骤，关闭绘制的路径*/ 
+context.stroke();
+context.fill();
+
+
+var animation2 = window.requestAnimationFrame(function(){
+        lines(context,l)  
+    });
+
+                //开始圆环动画
+                if (l>=80) {
+              change(context,r,coor[0])
+          }
+          //结束圆环动画
+          if( (l+40)>=end ){
+              change(context,r,coor[1])
+              window.cancelAnimationFrame(animation2);
+          }
+      }
+      lines(context,l)
+
+              
+   </script>
+</body>
+</html>
