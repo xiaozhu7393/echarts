@@ -257,7 +257,7 @@ $(function (){
 		    option.series[0].data = b[i];
 		    
 		    myChart.setOption(option, true);
-		},2000);
+		},3000);
 		
 	}());
 	
@@ -289,63 +289,33 @@ $(function (){
 		    }
 		};
 		
-		var app = {};
+		var app = {},
 		option = null;
 		app.title = '北京公交路线 - 线特效';
-		$.getJSON('lines-bus.json', function(data) {
-		    var hStep = 300 / (data.length - 1);
-		    var busLines = [].concat.apply([], data.map(function (busLine, idx) {
-		        var prevPt;
-		        var points = [];
-		        for (var i = 0; i < busLine.length; i += 2) {
-		            var pt = [busLine[i], busLine[i + 1]];
-		            if (i > 0) {
-		                pt = [
-		                    prevPt[0] + pt[0],
-		                    prevPt[1] + pt[1]
-		                ];
-		            }
-		            prevPt = pt;
-		
-		            points.push([pt[0] / 1e4, pt[1] / 1e4]);
-		        }
-		        return {
-		            coords: points,
-		            lineStyle: {
-		                normal: {
-		                    color: echarts.color.modifyHSL('#5A94DF', Math.round(hStep * idx))
-		                }
-		            }
-		        };
-		    }));
-//		    var myData = [
-//		    	{name: '淮海营业部', value: [121.485615, 31.215004,90]},
-//			  	{name: '打浦营业部', value: [121.489370, 31.198660,120]},
-//			  	{name: '新昌营业点', value: [121.468964, 31.233949, 142]},
-//			    {name: '卢湾营业点', value: [121.491280, 31.220435, 123]},
-//			    {name: '康定营业点', value: [121.448600, 31.234330, 123]},
-//			    {name: '江宁营业点', value: [121.449507, 31.233018, 123]},
-//			    {name: '江宁营业点', value: [121.449507, 31.233018, 123]},
-//			    {name: '江宁营业点', value: [121.449507, 31.233018, 123]},
-//			    {name: '虹桥营业部', value: [121.383852, 31.177376, 100]}
-//		    ];
+		//$.getJSON('line.json', function(res) {
 		    var myData = [
-		    	{name: '淮海营业部', value: [121.485615, 31.215004,90]},
-			  	{name: '打浦营业部', value: [121.489370, 31.198660,120]},
-			  	{name: '新昌营业点', value: [121.468964, 31.233949, 142]}
-		    ];
-		    var data1 =[
-		    	{
-		    		"coords":[[121.485615, 31.215004],[121.489370, 31.198660],[121.468964, 31.233949]],
-		    		"lineStyle":{
-		    			"normal":{
-		    				color:"rgba(88,186,247,1)",
-		    				width:0
-		    			}
-		    		}
-		    	}
-		    ]
-		    myChart.setOption(option = {
+			    {value:[121.485615,31.215004]},
+			    {value:[121.489370,31.198660]},
+			    {value:[121.468964,31.233949]},
+			    {value:[121.416996,31.271868]},
+			    {value:[121.414697,31.262978]},
+			    {value:[121.407798,31.222965]},
+			    {value:[121.404923,31.191832]},
+			    {value:[121.467589,31.180464]},
+			    {value:[121.366404,31.240257]},
+			    {value:[121.489370,31.198660]},
+			    {value:[121.478512,31.305442]},
+			    {value:[121.593495,31.236305]},
+			    {value:[121.352031,31.198257]},
+			    {value:[121.485411,31.184912]},
+			    {value:[121.466439,31.212589]},
+			    {value:[121.574523,31.179475]},
+			    {value:[121.413547,31.185901]},
+			    {value:[121.420446,31.260015]}
+			  ];
+		    console.log(myData)
+		    //var data1 =
+		   option = {
 		        bmap: {
 		            center: [121.491280, 31.220435],
 		            zoom: 12,
@@ -498,17 +468,34 @@ $(function (){
 		            coordinateSystem: 'bmap',
 		            polyline: true,
 		            //data: busLines,
-		            data:data1,
+		            data:[
+				    	{
+				    		"coords":[[121.485615, 31.215004],[121.489370, 31.198660]],
+				    		"lineStyle":{
+				    			"normal":{
+				    				color:"rgba(88,186,247,1)"
+				    			}
+				    		}
+				    	},
+				    	{
+				    		"coords":[[121.366404,31.240257],[121.468964, 31.233949]],
+				    		"lineStyle":{
+				    			"normal":{
+				    				color:"rgba(88,186,247,1)"
+				    			}
+				    		}
+				    	}
+				    ],
 		            lineStyle: {
 		                normal: {
-		                    width: 0
+		                    width: 1
 		                }
 		            },
 		            effect: {
-		                constantSpeed: 20,
+		                constantSpeed: 40,
 		                show: true,
-		                trailLength: 0.1,
-		                symbolSize: 1.5
+		                trailLength: 0.5,
+		                symbolSize: 5
 		            },
 		            zlevel: 1
 		        },
@@ -518,20 +505,30 @@ $(function (){
 		            coordinateSystem: 'bmap',
 		            data: myData,
 		            itemStyle : {
-		                	normal:{
-		                		color:"#ddb926"
-		                	}
-		                },
+	                	normal:{
+	                		color:"#ddb926"
+	                	}
+                	}
 		            
 		        }
 		        
 		        
 		        
 		        ]
-		    });
-		});;
+		    };
+		//});
 		if (option && typeof option === "object") {
-		    myChart.setOption(option, true);
+			myChart.setOption(option);
+			clearInterval(timeTicket4);
+			var timeTicket4 = setInterval(function (){
+				var i =Math.floor(Math.random()*18);
+				if (i+6>17) {
+					i=0;
+				}
+			    option.series[0].data[0].coords = [myData[i].value,myData[i+3].value];
+			    option.series[0].data[1].coords = [myData[i+4].value,myData[i+6].value];
+			    myChart.setOption(option);
+			},10000);
 		}
                     
 		
@@ -651,7 +648,7 @@ $(function (){
 		    option.series[0].data = b[i];
 		    
 		    myChart.setOption(option, true);
-		},2000);
+		},3000);
 
 	}());
 	
@@ -732,7 +729,7 @@ $(function (){
 		    option.series[0].data = b[i];
 		    
 		    myChart.setOption(option, true);
-		},2000);
+		},3000);
 	}());
                                                    
  	
