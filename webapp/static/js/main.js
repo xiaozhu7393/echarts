@@ -545,8 +545,16 @@ $(function (){
 				if (i+6>17) {
 					i=0;
 				}
-			    option.series[0].data[0].coords = [myData[i].value,myData[i+3].value];
-			    option.series[0].data[1].coords = [myData[i+4].value,myData[i+6].value];
+				if (i%2 == 0) {
+					option.series[1].data = myData;
+					option.series[0].data[0].coords = [myData[i].value,myData[i+3].value];
+			    	option.series[0].data[1].coords = [myData[i+4].value,myData[i+6].value];
+				}else{
+					option.series[1].data = myData1;
+					option.series[0].data[0].coords = [myData1[i].value,myData1[i+3].value];
+			    	option.series[0].data[1].coords = [myData1[i+4].value,myData1[i+6].value];
+				}
+			    
 			    myChart.setOption(option);
 			},10000);
 		}
