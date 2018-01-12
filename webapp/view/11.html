@@ -34,25 +34,25 @@
 
           //圆
           context.beginPath();
-          context.arc(option.X,option.Y,r+=2,0,2*Math.PI);
+          context.arc(option.X,option.Y,r+=1,0,2*Math.PI);
           context.closePath();
-          context.lineWidth = 4;
-          context.strokeStyle='rgba(255,0,0,'+(r>70?0:10/r)+')';
+          context.lineWidth = 3;
+          context.strokeStyle='rgba(247,226,88,'+(r>10?0:10/r)+')';
           context.stroke();
 
           //开启动画
-              var animationCouned = window.requestAnimationFrame(function(){
-                 change(context,r,option)  
-                });
+          var animationCouned = window.requestAnimationFrame(function(){
+             change(context,r,option)  
+            });
 
-              //清除动画和画布
-                if(r>=100){
-                  window.cancelAnimationFrame(animationCouned);
-                  context.clearRect(0,0,r,r);
-                  r=0;
-              }
+          //清除动画和画布
+            if(r>=100){
+              window.cancelAnimationFrame(animationCouned);
+              context.clearRect(0,0,r,r);
+              r=0;
+          }
       }
-      var speed = 10,
+      var speed = 3,
               l = 0,
               end = coor[1].X;
       function lines(context,l){
@@ -61,8 +61,7 @@
         l += speed;
 
         context.beginPath(); 
-context.strokeStyle="rgba(255,0,0,1)";/*设置边框*/ 
-context.fillStyle="rgba(255,0,0,1)";
+context.fillStyle="rgba(88,186,245,1)";
 context.lineWidth=1;/*边框的宽度*/
 context.beginPath(); 
 context.moveTo((l<60?100:l+40),(l<60?100:l+40));
@@ -77,15 +76,15 @@ var animation2 = window.requestAnimationFrame(function(){
         lines(context,l)  
     });
 
-                //开始圆环动画
-                if (l>=80) {
-              change(context,r,coor[0])
-          }
-          //结束圆环动画
-          if( (l+40)>=end ){
-              change(context,r,coor[1])
-              window.cancelAnimationFrame(animation2);
-          }
+            //开始圆环动画
+        if (l>=80) {
+        	change(context,r,coor[0])
+        }
+        //结束圆环动画
+        if( (l+40)>=end ){
+          change(context,r,coor[1])
+          window.cancelAnimationFrame(animation2);
+        }
       }
       lines(context,l)
 

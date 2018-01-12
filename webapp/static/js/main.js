@@ -28,8 +28,9 @@ $(function (){
 	(function (){
 		var myChart = echarts.init(document.getElementById('left-pie'));
 		var i=0;
-		var colors = ["#2078d1","#53f5f3"];
+		var colors = ["#2078d1","#53f5f3","#2078d1","#53f5f3"];
 		var	option = {
+				color: ["#2078d1","#53f5f3"],
 			    tooltip: {
 			        trigger: 'item',
 			        formatter: "{a} <br/>{b}: {c} ({d}%)"
@@ -50,9 +51,6 @@ $(function (){
 			            avoidLabelOverlap: false,
 			            itemStyle : {  
 			                normal : {  
-			                    color:function(){  
-			                        return colors[i++];   
-		                        },  
 			                    label : {  
 			                        show : true,
 			                        formatter: '{b} : {c} ({d}%)' 
@@ -81,13 +79,23 @@ $(function (){
 			            	}
 			            },
 			            data:[
-			                {value:33, name:'SWOT Carrier'},
+			                {value:40, name:'SWOT Carrier'},
 			                {value:310, name:'Reqular Carrier'}
 			            ]
 			        }
 			    ]
 			};
-		myChart.setOption(option);
+		var a = [33,40,43];
+		var b = [317,310,307];
+		clearInterval(timeTicket1);
+		var timeTicket1 = setInterval(function (){
+			var i =Math.floor(Math.random()*3);
+		    option.series[0].data[0].value = a[i];
+		    option.series[0].data[1].value = b[i];
+		    
+		    myChart.setOption(option, true);
+		},1000);	
+		
 	}());
 	
 	//left-bar
@@ -160,7 +168,16 @@ $(function (){
 			        }
 			    ]
 			};
-		myChart.setOption(option);
+		var a = [['5.五角场','4.徐家汇','3.火车站','2.新天地','1.陆家嘴'],['5.徐家汇','4.五角场','3.火车站','2.陆家嘴','1.新天地']];
+		var b = [[12, 34, 50, 88, 100],[20, 30, 50, 100, 120]];
+		clearInterval(timeTicket2);
+		var timeTicket2 = setInterval(function (){
+			var i =Math.floor(Math.random()*2);
+		    option.yAxis[0].data = a[i];
+		    option.series[0].data = b[i];
+		    
+		    myChart.setOption(option, true);
+		},2000);
 	}());
 	
 	//left-line
@@ -231,7 +248,16 @@ $(function (){
 			        }
 			    ]
 			};
-		myChart.setOption(option);
+		var a=[['10:49','10:50','10:51','10:52','10:53','10:54','10:55'],['11:03','11:04','11:05','11:06','11:07','11:08','11:09']];
+		var b = [[6.3, 6.0, 5.7, 5.9, 5.9, 6.1, 6.0],[6.6, 6.2, 5.3, 5.6, 5.5, 6.8, 6.1]];
+		clearInterval(timeTicket3);
+		var timeTicket3 = setInterval(function (){
+			var i =Math.floor(Math.random()*2);
+		    option.xAxis[0].data = a[i];
+		    option.series[0].data = b[i];
+		    
+		    myChart.setOption(option, true);
+		},2000);
 		
 	}());
 	
@@ -292,15 +318,33 @@ $(function (){
 		            }
 		        };
 		    }));
+//		    var myData = [
+//		    	{name: '淮海营业部', value: [121.485615, 31.215004,90]},
+//			  	{name: '打浦营业部', value: [121.489370, 31.198660,120]},
+//			  	{name: '新昌营业点', value: [121.468964, 31.233949, 142]},
+//			    {name: '卢湾营业点', value: [121.491280, 31.220435, 123]},
+//			    {name: '康定营业点', value: [121.448600, 31.234330, 123]},
+//			    {name: '江宁营业点', value: [121.449507, 31.233018, 123]},
+//			    {name: '江宁营业点', value: [121.449507, 31.233018, 123]},
+//			    {name: '江宁营业点', value: [121.449507, 31.233018, 123]},
+//			    {name: '虹桥营业部', value: [121.383852, 31.177376, 100]}
+//		    ];
 		    var myData = [
 		    	{name: '淮海营业部', value: [121.485615, 31.215004,90]},
 			  	{name: '打浦营业部', value: [121.489370, 31.198660,120]},
-			  	{name: '新昌营业点', value: [121.468964, 31.233949, 142]},
-			    {name: '卢湾营业点', value: [121.491280, 31.220435, 123]},
-			    {name: '康定营业点', value: [121.448600, 31.234330, 123]},
-			    {name: '江宁营业点', value: [121.449507, 31.233018, 123]},
-			    {name: '虹桥营业部', value: [121.383852, 31.177376, 100]}
+			  	{name: '新昌营业点', value: [121.468964, 31.233949, 142]}
 		    ];
+		    var data1 =[
+		    	{
+		    		"coords":[[121.485615, 31.215004],[121.489370, 31.198660],[121.468964, 31.233949]],
+		    		"lineStyle":{
+		    			"normal":{
+		    				color:"rgba(88,186,247,1)",
+		    				width:0
+		    			}
+		    		}
+		    	}
+		    ]
 		    myChart.setOption(option = {
 		        bmap: {
 		            center: [121.491280, 31.220435],
@@ -430,39 +474,31 @@ $(function (){
 		              ]
 		            }
 		        },
-		        visualMap: {	// 视觉映射组件
-					type: 'continuous',
-					min: 0,
-					max: 200,
-					calculable: true,
-					inRange: {
-			             	color: ['#50a3ba','#eac736','#d94e5d']
-			        },
-					textStyle: {
-						color: '#fff'
-					}
-		     	},
-		        series: [{
+		        
+		        series: [
+//		        {
+//		            type: 'lines',
+//		            coordinateSystem: 'bmap',
+//		            polyline: true,
+//		            data: busLines,
+//		            silent: true,
+//		            lineStyle: {
+//		                normal: {
+//		                    // color: '#c23531',
+//		                    // color: 'rgb(200, 35, 45)',
+//		                    opacity: 0.2,
+//		                    width: 1
+//		                }
+//		            },
+//		            progressiveThreshold: 500,
+//		            progressive: 200
+//		        }, 
+		        {
 		            type: 'lines',
 		            coordinateSystem: 'bmap',
 		            polyline: true,
-		            data: busLines,
-		            silent: true,
-		            lineStyle: {
-		                normal: {
-		                    // color: '#c23531',
-		                    // color: 'rgb(200, 35, 45)',
-		                    opacity: 0.2,
-		                    width: 1
-		                }
-		            },
-		            progressiveThreshold: 500,
-		            progressive: 200
-		        }, {
-		            type: 'lines',
-		            coordinateSystem: 'bmap',
-		            polyline: true,
-		            data: busLines,
+		            //data: busLines,
+		            data:data1,
 		            lineStyle: {
 		                normal: {
 		                    width: 0
@@ -481,22 +517,12 @@ $(function (){
 		        	type: 'scatter',
 		            coordinateSystem: 'bmap',
 		            data: myData,
-		            markLine:{
-		            	symbol: ['circle', 'circle'],  
-		                symbolSize : 1,
-		                effect : effect,
-		                itemStyle : itemStyle(0),
-		                smooth:true,
-		                data:[
-		                	
-		                ]
-		            }
+		            itemStyle : {
+		                	normal:{
+		                		color:"#ddb926"
+		                	}
+		                },
 		            
-		        	
-		        	
-		        	
-		        	
-		        	
 		        }
 		        
 		        
@@ -516,6 +542,7 @@ $(function (){
 	//right-dashboard
 	(function (){
 		var myChart = echarts.init(document.getElementById('right-dashboard'));
+		//myChart.showLoading();  //加载效果
 		var option = {
 				title : {
 			        text: '实时妥投率',
@@ -586,6 +613,9 @@ $(function (){
 			    yAxis : [
 			        {
 			            type : 'value',
+			            max: function(value) {
+						    return 600;
+						},
 			            splitLine :{
 			            	show:true,
 			            	lineStyle:{
@@ -614,8 +644,15 @@ $(function (){
 			        }
 			    ]
 			};
+		var b = [["100",'200','300'],["111",'222','333']];
+		clearInterval(timeTicket6);
+		var timeTicket6 = setInterval(function (){
+			var i =Math.floor(Math.random()*2);
+		    option.series[0].data = b[i];
+		    
+		    myChart.setOption(option, true);
+		},2000);
 
-		myChart.setOption(option);
 	}());
 	
 	//right-line
@@ -686,7 +723,16 @@ $(function (){
 			        }
 			    ]
 			};
-		myChart.setOption(option);
+		var a = [['10:00','11:00','12:00','13:00','14:00','15:00'],['12:00','13:00','14:00','15:00','16:00','17:00']];
+		var b = [[3100, 2900, 3117, 3019, 3004, 3008],[3140, 3000, 3100, 3119, 3034, 3028]];
+		clearInterval(timeTicket7);
+		var timeTicket7 = setInterval(function (){
+			var i =Math.floor(Math.random()*2);
+		    option.xAxis[0].data = a[i];
+		    option.series[0].data = b[i];
+		    
+		    myChart.setOption(option, true);
+		},2000);
 	}());
                                                    
  	
