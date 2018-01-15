@@ -103,7 +103,7 @@ $(function (){
 		var myChart = echarts.init(document.getElementById('left-bar'));
 		var option = {
 			    title : {
-			        text: '收件热点区域Top 5 预测',
+			        text: 'Top 5 Hot Area',
 			        x:'center',
         			y:'top',
 			        textStyle : {
@@ -185,7 +185,7 @@ $(function (){
 		var myChart = echarts.init(document.getElementById('left-line'));
 		var option = {
 			    title : {
-			        text: '运力压力指数',
+			        text: 'transportation/demands',
 			        textStyle : {
 			            color: '#fff'
 			        }
@@ -291,7 +291,6 @@ $(function (){
 		
 		var app = {},
 		option = null;
-		app.title = '北京公交路线 - 线特效';
 		//$.getJSON('line.json', function(res) {
 		    var myData = [
 			    {value:[121.485615,31.215004]},
@@ -538,7 +537,6 @@ $(function (){
 		    };
 		//});
 		if (option && typeof option === "object") {
-			myChart.setOption(option);
 			clearInterval(timeTicket4);
 			var timeTicket4 = setInterval(function (){
 				var i =Math.floor(Math.random()*18);
@@ -556,7 +554,7 @@ $(function (){
 				}
 			    
 			    myChart.setOption(option);
-			},10000);
+			},5000);
 		}
                     
 		
@@ -570,7 +568,7 @@ $(function (){
 		//myChart.showLoading();  //加载效果
 		var option = {
 				title : {
-			        text: '实时妥投率',
+			        text: 'Realtime Delevery Rate',
 			        x:'center',
 			        textStyle : {
 			            color: '#fff'
@@ -605,7 +603,7 @@ $(function (){
 		var myChart = echarts.init(document.getElementById('right-bar'));
 		var option = {
 			    title : {
-			        text: '实时快件数',
+			        text: 'Realtime Parcels Status',
 			        textStyle : {
 			            color: '#fff'
 			        }
@@ -685,7 +683,7 @@ $(function (){
 		var myChart = echarts.init(document.getElementById('right-line'));
 		var option = {
 			    title : {
-			        text: '最近一小时新增包裹',
+			        text: 'New Parcels occurred in last one hour',
 			        textStyle : {
 			            color: '#fff'
 			        }
