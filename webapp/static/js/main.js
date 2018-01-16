@@ -1,11 +1,11 @@
-$(function (){
+﻿$(function (){
 	//time
 	window.onload=function(){
 		//定时器每秒调用一次fnDate()
 		setInterval(function(){
 			fnDate('time');
 		},1000);
-	}
+	};
 	//js 获取当前时间
 	function fnDate(id){
 		var oDiv=document.getElementById(id);
@@ -18,12 +18,12 @@ $(function (){
 		var second=date.getSeconds();//秒
 		var time=year+"-"+fnW((month+1))+"-"+fnW(data)+" "+fnW(hours)+":"+fnW(minute)+":"+fnW(second);
 		oDiv.innerHTML=time;
-	}
+	};
 	//补位 当某个字段不是两位数时补0
 	function fnW(str){
 		str>10?str:"0"+str;
 		return str;
-	}
+	};
 //	//left-pie
 	(function (){
 		var myChart = echarts.init(document.getElementById('left-pie'));
@@ -332,7 +332,7 @@ $(function (){
 			    {value:[121.423547,31.195901]},
 			    {value:[121.410446,31.270015]}
 			  ];
-		    console.log(myData)
+		    console.log(myData);
 		    //var data1 =
 		   option = {
 		        bmap: {
