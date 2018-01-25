@@ -21,7 +21,8 @@
 	};
 	//补位 当某个字段不是两位数时补0
 	function fnW(str){
-		str>10?str:"0"+str;
+		var num = "";
+		str>10?str:str = "0"+str;
 		return str;
 	};
 //	//left-pie
@@ -85,8 +86,9 @@
 			        }
 			    ]
 			};
-		var a = [33,40,43];
-		var b = [317,310,307];
+		var a = [48,50,52];
+		var b = [802,800,798];
+		myChart.setOption(option);
 		clearInterval(timeTicket1);
 		var timeTicket1 = setInterval(function (){
 			var i =Math.floor(Math.random()*3);
@@ -107,7 +109,8 @@
 			        x:'center',
         			y:'top',
 			        textStyle : {
-			            color: '#fff'
+			            color: '#fff',
+			            fontSize:18
 			        }
 			    },
 			    tooltip : {
@@ -169,7 +172,8 @@
 			    ]
 			};
 		var a = [['5.五角场','4.徐家汇','3.火车站','2.新天地','1.陆家嘴'],['5.徐家汇','4.五角场','3.火车站','2.陆家嘴','1.新天地']];
-		var b = [[12, 34, 50, 88, 100],[20, 30, 50, 100, 120]];
+		var b = [[12, 34, 50, 88, 100],[20, 30, 50, 90, 100]];
+		myChart.setOption(option);
 		clearInterval(timeTicket2);
 		var timeTicket2 = setInterval(function (){
 			var i =Math.floor(Math.random()*2);
@@ -177,7 +181,7 @@
 		    option.series[0].data = b[i];
 		    
 		    myChart.setOption(option, true);
-		},2000);
+		},1000);
 	}());
 	
 	//left-line
@@ -236,18 +240,23 @@
 			        }
 			    ],
 			    series : [
-			
 			        {
 			            type:'line',
 			            data:[6.3, 6.0, 5.7, 5.9, 5.9, 6.1, 6.0],
 			            itemStyle:{
 			                normal:{color:'#58f4e6'}
 			            }
-			            
-			           
 			        }
 			    ]
 			};
+		var getTime = function  (time) {
+			var date=new Date();
+  			var hours=date.getHours();//小时
+			var minute=date.getMinutes();//分
+			for (var i=7;i>0:i--) {
+				
+			}
+		}
 		var a=[['10:49','10:50','10:51','10:52','10:53','10:54','10:55'],['11:03','11:04','11:05','11:06','11:07','11:08','11:09']];
 		var b = [[6.3, 6.0, 5.7, 5.9, 5.9, 6.1, 6.0],[6.6, 6.2, 5.3, 5.6, 5.5, 6.8, 6.1]];
 		clearInterval(timeTicket3);
@@ -255,7 +264,6 @@
 			var i =Math.floor(Math.random()*2);
 		    option.xAxis[0].data = a[i];
 		    option.series[0].data = b[i];
-		    
 		    myChart.setOption(option, true);
 		},3000);
 		
