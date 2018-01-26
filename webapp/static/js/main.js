@@ -23,6 +23,30 @@
 	};
 	//补位 当某个字段不是两位数时补0
 	function add0(m){return m<10?'0'+m:m };
+	
+	//去除重复数据 deport
+	//将对象元素转换成字符串以作比较
+	function obj2key(obj, keys){
+	    var n = keys.length,
+	        key = [];
+	    while(n--){
+	        key.push(obj[keys[n]]);
+	    }
+	    return key.join('|');
+	};
+	//去重操作
+	function uniqeByKeys(array,keys){
+	    var arr = [];
+	    var hash = {};
+	    for (var i = 0, j = array.length; i < j; i++) {
+	        var k = obj2key(array[i], keys);
+	        if (!(k in hash)) {
+	            hash[k] = true;
+	            arr .push(array[i]);
+	        }
+	    }
+	    return arr ;
+	};
 	//left-pie
 	(function (){
 		var myChart = echarts.init(document.getElementById('left-pie'));
@@ -331,7 +355,27 @@
 		
 		var app = {},
 		option = null;
-		//$.getJSON('line.json', function(res) {
+		$.post('http://182.254.216.232:80/main').done(function (res){
+		//$.get("point.json").done(function  (res) {
+			console.log(res);
+			var $res = uniqeByKeys(res,['point']);
+			console.log($res)
+			var list = [];
+			if ($res.length != 0) {
+				var len = $res.length;
+				for (var i=0 ; i<len ;i++) {
+					var add = ($res[i].point).split("-");
+					var a = Number(add[0]);
+					var b = Number(add[1]);
+					add[0] = b;
+					add[1] = a;
+					var item = {value:add};
+					list.push(item);
+				}
+				console.log(list)
+			}
+			var myData = list;
+			/*
 		    var myData = [
 			    {value:[121.485615,31.215004]},
 			    {value:[121.489370,31.198660]},
@@ -372,8 +416,7 @@
 			    {value:[121.423547,31.195901]},
 			    {value:[121.410446,31.270015]}
 			  ];
-		    //console.log(myData);
-		    //var data1 =
+			  */
 		   option = {
 		        bmap: {
 		            center: [121.491280, 31.220435],
@@ -505,23 +548,24 @@
 		        },
 		        
 		        series: [
-//		        {
-//		            type: 'lines',
-//		            coordinateSystem: 'bmap',
-//		            polyline: true,
-//		            data: busLines,
-//		            silent: true,
-//		            lineStyle: {
-//		                normal: {
-//		                    // color: '#c23531',
-//		                    // color: 'rgb(200, 35, 45)',
-//		                    opacity: 0.2,
-//		                    width: 1
-//		                }
-//		            },
-//		            progressiveThreshold: 500,
-//		            progressive: 200
-//		        }, 
+		        /*
+		        {
+		            type: 'lines',
+		            coordinateSystem: 'bmap',
+		            polyline: true,
+		            data: busLines,
+		            silent: true,
+		            lineStyle: {
+		                normal: {
+		                    // color: '#c23531',
+		                    // color: 'rgb(200, 35, 45)',
+		                    opacity: 0.2,
+		                    width: 1
+		                }
+		            },
+		            progressiveThreshold: 500,
+		            progressive: 200
+		        }, 
 		        {
 		            type: 'lines',
 		            coordinateSystem: 'bmap',
@@ -558,6 +602,7 @@
 		            },
 		            zlevel: 1
 		        },
+		        */
 		        
 		        {
 		        	type: 'scatter',
@@ -575,8 +620,11 @@
 		        
 		        ]
 		    };
-		//});
+		
 		if (option && typeof option === "object") {
+			myChart.setOption(option);
+			
+			/*
 			clearInterval(timeTicket4);
 			var timeTicket4 = setInterval(function (){
 				var i =Math.floor(Math.random()*18);
@@ -595,8 +643,12 @@
 			    
 			    myChart.setOption(option);
 			},5000);
+			*/
 		}
-                    
+        
+        }).fail(function  () {
+			console.log("fail");
+		});
 		
 		//myChart.setOption(option);
 	}());
