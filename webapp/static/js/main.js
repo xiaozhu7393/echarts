@@ -2,9 +2,11 @@
 	//time
 	window.onload=function(){
 		//定时器每秒调用一次fnDate()
-		setInterval(function(){
-			fnDate('time');
-		},1000);
+		clearInterval(timeTicket0);
+		var timeTicket0 = setInterval(function(){
+				fnDate('time');
+			},1000);
+		
 	};
 	//js 获取当前时间
 	function fnDate(id){
@@ -16,16 +18,12 @@
 		var hours=date.getHours();//小时
 		var minute=date.getMinutes();//分
 		var second=date.getSeconds();//秒
-		var time=year+"-"+fnW((month+1))+"-"+fnW(data)+" "+fnW(hours)+":"+fnW(minute)+":"+fnW(second);
+		var time=year+"-"+add0((month+1))+"-"+add0(data)+" "+add0(hours)+":"+add0(minute)+":"+add0(second);
 		oDiv.innerHTML=time;
 	};
 	//补位 当某个字段不是两位数时补0
-	function fnW(str){
-		var num = "";
-		str>10?str:str = "0"+str;
-		return str;
-	};
-//	//left-pie
+	function add0(m){return m<10?'0'+m:m };
+	//left-pie
 	(function (){
 		var myChart = echarts.init(document.getElementById('left-pie'));
 		var i=0;
@@ -80,8 +78,8 @@
 			            	}
 			            },
 			            data:[
-			                {value:40, name:'SWOT Carrier'},
-			                {value:310, name:'Reqular Carrier'}
+			                {value:50, name:'SWOT Carrier'},
+			                {value:800, name:'Reqular Carrier'}
 			            ]
 			        }
 			    ]
@@ -96,7 +94,7 @@
 		    option.series[0].data[1].value = b[i];
 		    
 		    myChart.setOption(option, true);
-		},1000);	
+		},60000);	
 		
 	}());
 	
@@ -166,7 +164,7 @@
 			            data:[12, 34, 50, 88, 100],
 			            itemStyle:{
                     		normal:{color:'#126ff8'}
-                		}
+                	}
 			            
 			        }
 			    ]
@@ -175,13 +173,21 @@
 		var b = [[12, 34, 50, 88, 100],[20, 30, 50, 90, 100]];
 		myChart.setOption(option);
 		clearInterval(timeTicket2);
+		clearInterval(timeTicket22);
 		var timeTicket2 = setInterval(function (){
 			var i =Math.floor(Math.random()*2);
-		    option.yAxis[0].data = a[i];
+		    //option.yAxis[0].data = a[i];
 		    option.series[0].data = b[i];
 		    
 		    myChart.setOption(option, true);
-		},1000);
+		},3000);
+		var timeTicket22 = setInterval(function (){
+			var i =Math.floor(Math.random()*2);
+		    option.yAxis[0].data = a[i];
+		    //option.series[0].data = b[i];
+		    
+		    myChart.setOption(option, true);
+		},30000);
 	}());
 	
 	//left-line
@@ -208,7 +214,7 @@
 			        {
 			            type : 'category',
 			            boundaryGap : false,
-			            data : ['10:49','10:50','10:51','10:52','10:53','10:54','10:55'],
+			            data : [],
 			            axisLabel:{  
 		                    margin:5,  
 		                    textStyle:{  
@@ -242,30 +248,57 @@
 			    series : [
 			        {
 			            type:'line',
-			            data:[6.3, 6.0, 5.7, 5.9, 5.9, 6.1, 6.0],
+			            data:[5.8, 5.9, 6.0, 6.0, 6.1, 6.1, 6.2],
 			            itemStyle:{
 			                normal:{color:'#58f4e6'}
 			            }
 			        }
 			    ]
 			};
-		var getTime = function  (time) {
+		var getTime = function  () {
+			var arr = [];//
 			var date=new Date();
   			var hours=date.getHours();//小时
 			var minute=date.getMinutes();//分
-			for (var i=7;i>0:i--) {
-				
+			for (var i=6;i>-1;i--) 
+			{
+				var m = minute - i;
+				var h = hours - 1;
+				if (m < 0) 
+				{
+					if (h == -1) 
+					{
+						var hh = 23;
+					}
+					else
+					{
+						var hh = add0(h);
+					}
+					var mm = 60 - Math.abs(m);
+				}
+				else
+				{
+					var mm = add0(m);
+					var hh = add0(hours);
+				}
+				var add = hh + ":" + mm;
+				arr.push(add);
 			}
+			return arr;
 		}
-		var a=[['10:49','10:50','10:51','10:52','10:53','10:54','10:55'],['11:03','11:04','11:05','11:06','11:07','11:08','11:09']];
-		var b = [[6.3, 6.0, 5.7, 5.9, 5.9, 6.1, 6.0],[6.6, 6.2, 5.3, 5.6, 5.5, 6.8, 6.1]];
+		option.xAxis[0].data = getTime();
+		myChart.setOption(option);
+		var b = [5.8, 5.9, 6.0, 6.0, 6.1, 6.1, 6.2];
+		var bb = [6.3, 6.2, 6.0, 6.1, 6.0, 6.3, 6.1];
 		clearInterval(timeTicket3);
 		var timeTicket3 = setInterval(function (){
-			var i =Math.floor(Math.random()*2);
-		    option.xAxis[0].data = a[i];
-		    option.series[0].data = b[i];
+			var i =Math.floor(Math.random()*7);
+			b.shift();
+			b.push(bb[i]);
+		    option.xAxis[0].data = getTime();
+		    option.series[0].data = b;
 		    myChart.setOption(option, true);
-		},3000);
+		},60000);
 		
 	}());
 	
@@ -340,7 +373,7 @@
 			    {value:[121.423547,31.195901]},
 			    {value:[121.410446,31.270015]}
 			  ];
-		    console.log(myData);
+		    //console.log(myData);
 		    //var data1 =
 		   option = {
 		        bmap: {
@@ -645,7 +678,7 @@
 			        {
 			            type : 'value',
 			            max: function(value) {
-						    return 600;
+						    return 10000;
 						},
 			            splitLine :{
 			            	show:true,
@@ -668,21 +701,22 @@
 			        {
 			            type:'bar',
 			            barWidth:30,
-			            data:["100",'200','300'],
+			            data:["2000",'2200','4232'],
 			            itemStyle:{
 			                normal:{color:'#358be3'}
 			            }
 			        }
 			    ]
 			};
-		var b = [["100",'200','300'],["111",'222','333']];
+		myChart.setOption(option);
+		var b = [["2000",'2200','4232'],["2153",'2489','4015'],["2233",'2689','4215']];
 		clearInterval(timeTicket6);
 		var timeTicket6 = setInterval(function (){
-			var i =Math.floor(Math.random()*2);
+			var i =Math.floor(Math.random()*3);
 		    option.series[0].data = b[i];
 		    
 		    myChart.setOption(option, true);
-		},3000);
+		},60000);
 
 	}());
 	
@@ -710,7 +744,7 @@
 			        {
 			            type : 'category',
 			            boundaryGap : false,
-			            data : ['10:00','11:00','12:00','13:00','14:00','15:00'],
+			            data : [],
 			            axisLabel:{  
 		                    margin:5,  
 		                    textStyle:{  
@@ -754,16 +788,40 @@
 			        }
 			    ]
 			};
-		var a = [['10:00','11:00','12:00','13:00','14:00','15:00'],['12:00','13:00','14:00','15:00','16:00','17:00']];
-		var b = [[3100, 2900, 3117, 3019, 3004, 3008],[3140, 3000, 3100, 3119, 3034, 3028]];
+		var getTimeHour = function  () {
+			var arr = [];//
+			var date=new Date();
+  			var hours=date.getHours();//小时
+			for (var i=6;i>0;i--) 
+			{
+				var h = hours - i;
+				if (h < 0) 
+				{
+					var hh = 24 - Math.abs(h);
+				}
+				else
+				{
+					var hh = add0(h);
+				}
+				var add = hh + ":00";
+				arr.push(add);
+			}
+			return arr;
+		}
+		option.xAxis[0].data = getTimeHour();
+		myChart.setOption(option);
+		var b = [3100, 2900, 3117, 3019, 3004, 3008];
+		var bb = [3140, 3000, 3100, 3119, 3034, 3028];
 		clearInterval(timeTicket7);
 		var timeTicket7 = setInterval(function (){
-			var i =Math.floor(Math.random()*2);
-		    option.xAxis[0].data = a[i];
-		    option.series[0].data = b[i];
+			var i =Math.floor(Math.random()*6);
+			b.shift();
+			b.push(bb[i]);
+		    option.xAxis[0].data = getTimeHour();
+		    option.series[0].data = b;
 		    
 		    myChart.setOption(option, true);
-		},3000);
+		},3600000);
 	}());
                                                    
  	
