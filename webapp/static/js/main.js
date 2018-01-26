@@ -44,7 +44,6 @@
 			    },
 			    series: [
 			        {
-			            name:'访问来源',
 			            type:'pie',
 			            radius: ['50%', '70%'],
 			            avoidLabelOverlap: false,
@@ -94,7 +93,7 @@
 		    option.series[0].data[1].value = b[i];
 		    
 		    myChart.setOption(option, true);
-		},60000);	
+		},30000);	
 		
 	}());
 	
@@ -180,7 +179,7 @@
 		    option.series[0].data = b[i];
 		    
 		    myChart.setOption(option, true);
-		},3000);
+		},2000);
 		var timeTicket22 = setInterval(function (){
 			var i =Math.floor(Math.random()*2);
 		    option.yAxis[0].data = a[i];
