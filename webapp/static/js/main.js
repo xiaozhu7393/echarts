@@ -355,8 +355,8 @@
 		
 		var app = {},
 		option = null;
-		//$.post('http://182.254.216.232:80/main').done(function (res){
-		$.get("point.json").done(function  (res) {
+		$.post('http://182.254.216.232:80/main').done(function (res){
+		//$.get("point.json").done(function  (res) {
 			console.log(res);
 			if (res.carrierList.length != 0)
 			{
