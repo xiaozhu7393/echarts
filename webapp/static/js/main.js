@@ -86,7 +86,7 @@
 			                        show : true,  
 			                        position : 'center',  
 			                        textStyle : {  
-			                            fontSize : '30',  
+			                            fontSize : '18',  
 			                            fontWeight : 'bold'  
 			                        }  
 			                    }  
@@ -355,26 +355,74 @@
 		
 		var app = {},
 		option = null;
-		$.post('http://182.254.216.232:80/main').done(function (res){
-		//$.get("point.json").done(function  (res) {
+		//$.post('http://182.254.216.232:80/main').done(function (res){
+		$.get("point.json").done(function  (res) {
 			console.log(res);
-			var $res = uniqeByKeys(res,['point']);
-			console.log($res)
-			var list = [];
-			if ($res.length != 0) {
-				var len = $res.length;
-				for (var i=0 ; i<len ;i++) {
-					var add = ($res[i].point).split("-");
-					var a = Number(add[0]);
-					var b = Number(add[1]);
-					add[0] = b;
-					add[1] = a;
-					var item = {value:add};
-					list.push(item);
+			if (res.carrierList.length != 0)
+			{
+				var carr = res.carrierList,
+					c_len = carr.length,
+					carrlist = [];
+				for (var i=0;i<c_len;i++)
+				{
+					var item = [],
+						a = Number(carr[i].currentLong),
+						b = Number(carr[i].currentLat);
+					item.push(a);
+					item.push(b);
+					carrlist.push(item);
 				}
-				console.log(list)
 			}
-			var myData = list;
+			
+			if (res.parcelList.length != 0)
+			{
+				var par = res.parcelList,
+					p_len = par.length,
+					parlist = [],
+					parlist_line = [];
+				for (var j=0;j<p_len;j++)
+				{
+					var item_p = [],
+						item_pp = [],
+						a_p = Number(par[j].origLong),
+						b_p = Number(par[j].origLat),
+						a_pp = Number(par[j].destLong),
+						b_pp = Number(par[j].destLat);
+					item_p.push(a_p);
+					item_p.push(b_p);
+					item_pp.push(a_pp);
+					item_pp.push(b_pp);
+					parlist.push(item_p);
+					parlist.push(item_pp);
+				}
+				
+				for (var k=0;k<p_len;k++)
+				{
+					var item_orig = [],
+						item_dest = [],
+						item_all = "";
+						a_orig = Number(par[k].origLong),
+						b_orig = Number(par[k].origLat),
+						a_dest = Number(par[k].destLong),
+						b_dest = Number(par[k].destLat);
+					item_orig.push(a_orig);
+					item_orig.push(b_orig);
+					item_dest.push(a_dest);
+					item_dest.push(b_dest);
+					item_all = {
+			    		"coords":[item_orig,item_dest],
+			    		"lineStyle":{
+			    			"normal":{
+			    				color:"rgba(88,186,247,1)"
+			    			}
+			    		}
+			    	}
+					parlist_line.push(item_all);
+				}
+			}
+			var myData = carrlist;
+			var myData1 = parlist;
+			var myLine = parlist_line;
 			/*
 		    var myData = [
 			    {value:[121.485615,31.215004]},
@@ -396,26 +444,7 @@
 			    {value:[121.413547,31.185901]},
 			    {value:[121.420446,31.260015]}
 			  ];
-			var myData1 = [
-			    {value:[121.475615,31.225004]},
-			    {value:[121.469370,31.138660]},
-			    {value:[121.448964,31.213949]},
-			    {value:[121.426996,31.261868]},
-			    {value:[121.424697,31.272978]},
-			    {value:[121.417798,31.232965]},
-			    {value:[121.414923,31.181832]},
-			    {value:[121.477589,31.110464]},
-			    {value:[121.326404,31.250257]},
-			    {value:[121.499370,31.188660]},
-			    {value:[121.488512,31.315442]},
-			    {value:[121.583495,31.226305]},
-			    {value:[121.342031,31.188257]},
-			    {value:[121.475411,31.194912]},
-			    {value:[121.476439,31.222589]},
-			    {value:[121.584523,31.189475]},
-			    {value:[121.423547,31.195901]},
-			    {value:[121.410446,31.270015]}
-			  ];
+			
 			  */
 		   option = {
 		        bmap: {
@@ -566,29 +595,13 @@
 		            progressiveThreshold: 500,
 		            progressive: 200
 		        }, 
+		        */
 		        {
 		            type: 'lines',
 		            coordinateSystem: 'bmap',
 		            polyline: true,
 		            //data: busLines,
-		            data:[
-				    	{
-				    		"coords":[[121.485615, 31.215004],[121.489370, 31.198660]],
-				    		"lineStyle":{
-				    			"normal":{
-				    				color:"rgba(88,186,247,1)"
-				    			}
-				    		}
-				    	},
-				    	{
-				    		"coords":[[121.366404,31.240257],[121.468964, 31.233949]],
-				    		"lineStyle":{
-				    			"normal":{
-				    				color:"rgba(88,186,247,1)"
-				    			}
-				    		}
-				    	}
-				    ],
+		            data:myLine,
 		            lineStyle: {
 		                normal: {
 		                    width: 1
@@ -602,7 +615,7 @@
 		            },
 		            zlevel: 1
 		        },
-		        */
+		        
 		        
 		        {
 		        	type: 'scatter',
@@ -613,7 +626,16 @@
 	                		color:"#ddb926"
 	                	}
                 	}
-		            
+		        },
+		        {
+		        	type: 'scatter',
+		            coordinateSystem: 'bmap',
+		            data: myData1,
+		            itemStyle : {
+	                	normal:{
+	                		color:"rgba(88,186,247,1)"
+	                	}
+                	}
 		        }
 		        
 		        
