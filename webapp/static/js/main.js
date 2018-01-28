@@ -354,55 +354,124 @@
 		        }
 		    }
 		};
-		
+		function carrTimeIdList (arr) {
+			var arrlist = uniqeByKeys(arr,["timeID"]);
+			var len = arrlist.length;
+			var list = [];
+			for (var i=0;i<len;i++) {
+				list.push(arrlist[i].timeID);
+			}
+			return list;
+		};
+		function partTimeIdList (arr) {
+			var arrlist = uniqeByKeys(arr,["timeId"]);
+			var len = arrlist.length;
+			var list = [];
+			for (var i=0;i<len;i++) 
+			{
+				list.push(arrlist[i].timeId);
+			}
+			return list;
+		};
+		function carrlist (arr,id) {
+			var len = arr.length;
+			var list = [];
+			if (len) 
+			{
+				for (var i=0;i<len;i++) 
+				{
+					if (arr[i].timeID == id)
+					{
+						var item = [],
+							a = Number(arr[i].currentLong),
+							b = Number(arr[i].currentLat);
+						item.push(a);
+						item.push(b);
+						list.push(item);
+					}
+				}
+			}
+			return list;
+		};
+		function parlist (arr,id) {
+			var len = arr.length;
+			var list = [];
+			if (len) 
+			{
+				for (var i=0;i<len;i++) 
+				{
+					if (arr[i].timeId == id)
+					{
+						var item_p = [],
+							item_pp = [],
+							a_p = Number(arr[i].origLong),
+							b_p = Number(arr[i].origLat),
+							a_pp = Number(arr[i].destLong),
+							b_pp = Number(arr[i].destLat);
+						item_p.push(a_p);
+						item_p.push(b_p);
+						item_pp.push(a_pp);
+						item_pp.push(b_pp);
+						list.push(item_p);
+						list.push(item_pp);
+					}
+				}
+			}
+			return list;
+		};
 		var app = {},
 		option = null;
 		function mapajax () {
 			$.ajax({
 				type:"get",
 				//url:"http://182.254.216.232/main/dynamic",
+				//url:"http://182.254.216.232/main/calculate",
 				url:"point1.json",
 				async:true,
 				timeout:7200,
 				success:function  (res) {
 					console.log(res);
-					if (res.carrierList.length != 0)
-					{
-						var carr = res.carrierList,
-							c_len = carr.length,
-							carrlist = [];
-						for (var i=0;i<c_len;i++)
-						{
-							var item = [],
-								a = Number(carr[i].currentLong),
-								b = Number(carr[i].currentLat);
-							item.push(a);
-							item.push(b);
-							carrlist.push(item);
-						}
-					}
+					var carrTimeId = carrTimeIdList(res.carrierList);
+					var partTimeId = partTimeIdList(res.parcelList);
+					console.log(carrTimeId)
+					console.log(partTimeId)
+//					if (res.carrierList.length != 0)
+//					{
+//						var carr = res.carrierList,
+//							c_len = carr.length,
+//							carrlist = [];
+//						for (var i=0;i<c_len;i++)
+//						{
+//							var item = [],
+//								a = Number(carr[i].currentLong),
+//								b = Number(carr[i].currentLat);
+//							item.push(a);
+//							item.push(b);
+//							carrlist.push(item);
+//						}
+//					}
 					
 					if (res.parcelList.length != 0)
 					{
 						var par = res.parcelList,
 							p_len = par.length,
-							parlist = [],
+							//parlist = [],
 							parlist_line = [];
-						for (var j=0;j<p_len;j++)
-						{
-							var item_p = [],
-								item_pp = [],
-								a_p = Number(par[j].origLong),
-								b_p = Number(par[j].origLat),
-								a_pp = Number(par[j].destLong),
-								b_pp = Number(par[j].destLat);
-							item_p.push(a_p);
-							item_p.push(b_p);
-							item_pp.push(a_pp);
-							item_pp.push(b_pp);
-							parlist.push(item_p);
-							parlist.push(item_pp);
-						}
+//						for (var j=0;j<p_len;j++)
+//						{
+//							var item_p = [],
+//								item_pp = [],
+//								a_p = Number(par[j].origLong),
+//								b_p = Number(par[j].origLat),
+//								a_pp = Number(par[j].destLong),
+//								b_pp = Number(par[j].destLat);
+//							item_p.push(a_p);
+//							item_p.push(b_p);
+//							item_pp.push(a_pp);
+//							item_pp.push(b_pp);
+//							parlist.push(item_p);
+//							parlist.push(item_pp);
+//						}
 						
 						for (var k=0;k<p_len;k++)
 						{
@@ -428,8 +497,8 @@
 							parlist_line.push(item_all);
 						}
 					}
-					myData = carrlist;
-					myData1 = parlist;
+					myData = carrlist(res.carrierList,128);
+					myData1 = parlist(res.parcelList,128);
 					myLine = parlist_line;
 					/*
 				    var myData = [
@@ -438,7 +507,7 @@
 					  ];
 					
 					  */
-				   option = {
+				    option = {
 				        bmap: {
 				            center: [121.491280, 31.220435],
 				            zoom: 12,
@@ -588,25 +657,25 @@
 				            progressive: 200
 				        }, 
 				        */
-				        {
-				            type: 'lines',
-				            coordinateSystem: 'bmap',
-				            polyline: true,
-				            //data: busLines,
-				            data:myLine,
-				            lineStyle: {
-				                normal: {
-				                    width: 1
-				                }
-				            },
-				            effect: {
-				                constantSpeed: 40,
-				                show: true,
-				                trailLength: 0.5,
-				                symbolSize: 5
-				            },
-				            zlevel: 1
-				        },
+//				        {
+//				            type: 'lines',
+//				            coordinateSystem: 'bmap',
+//				            polyline: true,
+//				            //data: busLines,
+//				            data:myLine,
+//				            lineStyle: {
+//				                normal: {
+//				                    width: 1
+//				                }
+//				            },
+//				            effect: {
+//				                constantSpeed: 40,
+//				                show: true,
+//				                trailLength: 0.5,
+//				                symbolSize: 5
+//				            },
+//				            zlevel: 1
+//				        },
 				        
 				        
 				        {
