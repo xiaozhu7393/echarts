@@ -357,317 +357,319 @@
 		
 		var app = {},
 		option = null;
-		$.ajax({
-			type:"post",
-			url:"http://182.254.216.232/main/dynamic",
-			//url:"point.json",
-			async:true,
-			timeout:7200,
-			success:function  (res) {
-				console.log(res);
-				if (res.carrierList.length != 0)
-				{
-					var carr = res.carrierList,
-						c_len = carr.length,
-						carrlist = [];
-					for (var i=0;i<c_len;i++)
+		function mapajax () {
+			$.ajax({
+				type:"get",
+				//url:"http://182.254.216.232/main/dynamic",
+				url:"point1.json",
+				async:true,
+				timeout:7200,
+				success:function  (res) {
+					console.log(res);
+					if (res.carrierList.length != 0)
 					{
-						var item = [],
-							a = Number(carr[i].currentLong),
-							b = Number(carr[i].currentLat);
-						item.push(a);
-						item.push(b);
-						carrlist.push(item);
-					}
-				}
-				
-				if (res.parcelList.length != 0)
-				{
-					var par = res.parcelList,
-						p_len = par.length,
-						parlist = [],
-						parlist_line = [];
-					for (var j=0;j<p_len;j++)
-					{
-						var item_p = [],
-							item_pp = [],
-							a_p = Number(par[j].origLong),
-							b_p = Number(par[j].origLat),
-							a_pp = Number(par[j].destLong),
-							b_pp = Number(par[j].destLat);
-						item_p.push(a_p);
-						item_p.push(b_p);
-						item_pp.push(a_pp);
-						item_pp.push(b_pp);
-						parlist.push(item_p);
-						parlist.push(item_pp);
+						var carr = res.carrierList,
+							c_len = carr.length,
+							carrlist = [];
+						for (var i=0;i<c_len;i++)
+						{
+							var item = [],
+								a = Number(carr[i].currentLong),
+								b = Number(carr[i].currentLat);
+							item.push(a);
+							item.push(b);
+							carrlist.push(item);
+						}
 					}
 					
-					for (var k=0;k<p_len;k++)
+					if (res.parcelList.length != 0)
 					{
-						var item_orig = [],
-							item_dest = [],
-							item_all = "";
-							a_orig = Number(par[k].origLong),
-							b_orig = Number(par[k].origLat),
-							a_dest = Number(par[k].destLong),
-							b_dest = Number(par[k].destLat);
-						item_orig.push(a_orig);
-						item_orig.push(b_orig);
-						item_dest.push(a_dest);
-						item_dest.push(b_dest);
-						item_all = {
-				    		"coords":[item_orig,item_dest],
-				    		"lineStyle":{
-				    			"normal":{
-				    				color:"rgba(88,186,247,1)"
-				    			}
-				    		}
-				    	}
-						parlist_line.push(item_all);
+						var par = res.parcelList,
+							p_len = par.length,
+							parlist = [],
+							parlist_line = [];
+						for (var j=0;j<p_len;j++)
+						{
+							var item_p = [],
+								item_pp = [],
+								a_p = Number(par[j].origLong),
+								b_p = Number(par[j].origLat),
+								a_pp = Number(par[j].destLong),
+								b_pp = Number(par[j].destLat);
+							item_p.push(a_p);
+							item_p.push(b_p);
+							item_pp.push(a_pp);
+							item_pp.push(b_pp);
+							parlist.push(item_p);
+							parlist.push(item_pp);
+						}
+						
+						for (var k=0;k<p_len;k++)
+						{
+							var item_orig = [],
+								item_dest = [],
+								item_all = "";
+								a_orig = Number(par[k].origLong),
+								b_orig = Number(par[k].origLat),
+								a_dest = Number(par[k].destLong),
+								b_dest = Number(par[k].destLat);
+							item_orig.push(a_orig);
+							item_orig.push(b_orig);
+							item_dest.push(a_dest);
+							item_dest.push(b_dest);
+							item_all = {
+					    		"coords":[item_orig,item_dest],
+					    		"lineStyle":{
+					    			"normal":{
+					    				color:"rgba(88,186,247,1)"
+					    			}
+					    		}
+					    	}
+							parlist_line.push(item_all);
+						}
 					}
+					myData = carrlist;
+					myData1 = parlist;
+					myLine = parlist_line;
+					/*
+				    var myData = [
+					    {value:[121.485615,31.215004]},
+					    {value:[121.420446,31.260015]}
+					  ];
+					
+					  */
+				   option = {
+				        bmap: {
+				            center: [121.491280, 31.220435],
+				            zoom: 12,
+				            roam: true,
+				            mapStyle: {
+				              'styleJson': [
+				                {
+				                  'featureType': 'water',
+				                  'elementType': 'all',
+				                  'stylers': {
+				                    'color': '#031628'
+				                  }
+				                },
+				                {
+				                  'featureType': 'land',
+				                  'elementType': 'geometry',
+				                  'stylers': {
+				                    'color': '#000102'
+				                  }
+				                },
+				                {
+				                  'featureType': 'highway',
+				                  'elementType': 'all',
+				                  'stylers': {
+				                    'visibility': 'off'
+				                  }
+				                },
+				                {
+				                  'featureType': 'arterial',
+				                  'elementType': 'geometry.fill',
+				                  'stylers': {
+				                    'color': '#000000'
+				                  }
+				                },
+				                {
+				                  'featureType': 'arterial',
+				                  'elementType': 'geometry.stroke',
+				                  'stylers': {
+				                    'color': '#0b3d51'
+				                  }
+				                },
+				                {
+				                  'featureType': 'local',
+				                  'elementType': 'geometry',
+				                  'stylers': {
+				                    'color': '#000000'
+				                  }
+				                },
+				                {
+				                  'featureType': 'railway',
+				                  'elementType': 'geometry.fill',
+				                  'stylers': {
+				                    'color': '#000000'
+				                  }
+				                },
+				                {
+				                  'featureType': 'railway',
+				                  'elementType': 'geometry.stroke',
+				                  'stylers': {
+				                    'color': '#08304b'
+				                  }
+				                },
+				                {
+				                  'featureType': 'subway',
+				                  'elementType': 'geometry',
+				                  'stylers': {
+				                    'lightness': -70
+				                  }
+				                },
+				                {
+				                  'featureType': 'building',
+				                  'elementType': 'geometry.fill',
+				                  'stylers': {
+				                    'color': '#000000'
+				                  }
+				                },
+				                {
+				                  'featureType': 'all',
+				                  'elementType': 'labels.text.fill',
+				                  'stylers': {
+				                    'color': '#857f7f'
+				                  }
+				                },
+				                {
+				                  'featureType': 'all',
+				                  'elementType': 'labels.text.stroke',
+				                  'stylers': {
+				                    'color': '#000000'
+				                  }
+				                },
+				                {
+				                  'featureType': 'building',
+				                  'elementType': 'geometry',
+				                  'stylers': {
+				                    'color': '#022338'
+				                  }
+				                },
+				                {
+				                  'featureType': 'green',
+				                  'elementType': 'geometry',
+				                  'stylers': {
+				                    'color': '#062032'
+				                  }
+				                },
+				                {
+				                  'featureType': 'boundary',
+				                  'elementType': 'all',
+				                  'stylers': {
+				                    'color': '#465b6c'
+				                  }
+				                },
+				                {
+				                  'featureType': 'manmade',
+				                  'elementType': 'all',
+				                  'stylers': {
+				                    'color': '#022338'
+				                  }
+				                },
+				                {
+				                  'featureType': 'label',
+				                  'elementType': 'all',
+				                  'stylers': {
+				                    'visibility': 'off'
+				                  }
+				                }
+				              ]
+				            }
+				        },
+				        
+				        series: [
+				        /*
+				        {
+				            type: 'lines',
+				            coordinateSystem: 'bmap',
+				            polyline: true,
+				            data: busLines,
+				            silent: true,
+				            lineStyle: {
+				                normal: {
+				                    // color: '#c23531',
+				                    // color: 'rgb(200, 35, 45)',
+				                    opacity: 0.2,
+				                    width: 1
+				                }
+				            },
+				            progressiveThreshold: 500,
+				            progressive: 200
+				        }, 
+				        */
+				        {
+				            type: 'lines',
+				            coordinateSystem: 'bmap',
+				            polyline: true,
+				            //data: busLines,
+				            data:myLine,
+				            lineStyle: {
+				                normal: {
+				                    width: 1
+				                }
+				            },
+				            effect: {
+				                constantSpeed: 40,
+				                show: true,
+				                trailLength: 0.5,
+				                symbolSize: 5
+				            },
+				            zlevel: 1
+				        },
+				        
+				        
+				        {
+				        	type: 'scatter',
+				            coordinateSystem: 'bmap',
+				            data: myData,
+				            itemStyle : {
+			                	normal:{
+			                		color:"#ddb926"
+			                	}
+		                	}
+				        },
+				        {
+				        	type: 'scatter',
+				            coordinateSystem: 'bmap',
+				            data: myData1,
+				            itemStyle : {
+			                	normal:{
+			                		color:"rgba(88,186,247,1)",
+			                		fontSize:12
+			                	}
+		                    },
+		                    symbolSize:8
+				        }
+				        
+				        
+				        
+				        ]
+				    };
+				
+				if (option && typeof option === "object") {
+					myChart.setOption(option);
+					//mapajax();
+					/*
+					clearInterval(timeTicket4);
+					var timeTicket4 = setInterval(function (){
+						var i =Math.floor(Math.random()*18);
+						if (i+6>17) {
+							i=0;
+						}
+						if (i%2 == 0) {
+							option.series[1].data = myData;
+							option.series[0].data[0].coords = [myData[i].value,myData[i+3].value];
+					    	option.series[0].data[1].coords = [myData[i+4].value,myData[i+6].value];
+						}else{
+							option.series[1].data = myData1;
+							option.series[0].data[0].coords = [myData1[i].value,myData1[i+3].value];
+					    	option.series[0].data[1].coords = [myData1[i+4].value,myData1[i+6].value];
+						}
+					    
+					    myChart.setOption(option);
+					},5000);
+					*/
 				}
-				myData = carrlist;
-				myData1 = parlist;
-				myLine = parlist_line;
-				/*
-			    var myData = [
-				    {value:[121.485615,31.215004]},
-				    {value:[121.420446,31.260015]}
-				  ];
-				
-				  */
-			   option = {
-			        bmap: {
-			            center: [121.491280, 31.220435],
-			            zoom: 12,
-			            roam: true,
-			            mapStyle: {
-			              'styleJson': [
-			                {
-			                  'featureType': 'water',
-			                  'elementType': 'all',
-			                  'stylers': {
-			                    'color': '#031628'
-			                  }
-			                },
-			                {
-			                  'featureType': 'land',
-			                  'elementType': 'geometry',
-			                  'stylers': {
-			                    'color': '#000102'
-			                  }
-			                },
-			                {
-			                  'featureType': 'highway',
-			                  'elementType': 'all',
-			                  'stylers': {
-			                    'visibility': 'off'
-			                  }
-			                },
-			                {
-			                  'featureType': 'arterial',
-			                  'elementType': 'geometry.fill',
-			                  'stylers': {
-			                    'color': '#000000'
-			                  }
-			                },
-			                {
-			                  'featureType': 'arterial',
-			                  'elementType': 'geometry.stroke',
-			                  'stylers': {
-			                    'color': '#0b3d51'
-			                  }
-			                },
-			                {
-			                  'featureType': 'local',
-			                  'elementType': 'geometry',
-			                  'stylers': {
-			                    'color': '#000000'
-			                  }
-			                },
-			                {
-			                  'featureType': 'railway',
-			                  'elementType': 'geometry.fill',
-			                  'stylers': {
-			                    'color': '#000000'
-			                  }
-			                },
-			                {
-			                  'featureType': 'railway',
-			                  'elementType': 'geometry.stroke',
-			                  'stylers': {
-			                    'color': '#08304b'
-			                  }
-			                },
-			                {
-			                  'featureType': 'subway',
-			                  'elementType': 'geometry',
-			                  'stylers': {
-			                    'lightness': -70
-			                  }
-			                },
-			                {
-			                  'featureType': 'building',
-			                  'elementType': 'geometry.fill',
-			                  'stylers': {
-			                    'color': '#000000'
-			                  }
-			                },
-			                {
-			                  'featureType': 'all',
-			                  'elementType': 'labels.text.fill',
-			                  'stylers': {
-			                    'color': '#857f7f'
-			                  }
-			                },
-			                {
-			                  'featureType': 'all',
-			                  'elementType': 'labels.text.stroke',
-			                  'stylers': {
-			                    'color': '#000000'
-			                  }
-			                },
-			                {
-			                  'featureType': 'building',
-			                  'elementType': 'geometry',
-			                  'stylers': {
-			                    'color': '#022338'
-			                  }
-			                },
-			                {
-			                  'featureType': 'green',
-			                  'elementType': 'geometry',
-			                  'stylers': {
-			                    'color': '#062032'
-			                  }
-			                },
-			                {
-			                  'featureType': 'boundary',
-			                  'elementType': 'all',
-			                  'stylers': {
-			                    'color': '#465b6c'
-			                  }
-			                },
-			                {
-			                  'featureType': 'manmade',
-			                  'elementType': 'all',
-			                  'stylers': {
-			                    'color': '#022338'
-			                  }
-			                },
-			                {
-			                  'featureType': 'label',
-			                  'elementType': 'all',
-			                  'stylers': {
-			                    'visibility': 'off'
-			                  }
-			                }
-			              ]
-			            }
-			        },
-			        
-			        series: [
-			        /*
-			        {
-			            type: 'lines',
-			            coordinateSystem: 'bmap',
-			            polyline: true,
-			            data: busLines,
-			            silent: true,
-			            lineStyle: {
-			                normal: {
-			                    // color: '#c23531',
-			                    // color: 'rgb(200, 35, 45)',
-			                    opacity: 0.2,
-			                    width: 1
-			                }
-			            },
-			            progressiveThreshold: 500,
-			            progressive: 200
-			        }, 
-			        */
-			        {
-			            type: 'lines',
-			            coordinateSystem: 'bmap',
-			            polyline: true,
-			            //data: busLines,
-			            data:myLine,
-			            lineStyle: {
-			                normal: {
-			                    width: 1
-			                }
-			            },
-			            effect: {
-			                constantSpeed: 40,
-			                show: true,
-			                trailLength: 0.5,
-			                symbolSize: 5
-			            },
-			            zlevel: 1
-			        },
-			        
-			        
-			        {
-			        	type: 'scatter',
-			            coordinateSystem: 'bmap',
-			            data: myData,
-			            itemStyle : {
-		                	normal:{
-		                		color:"#ddb926"
-		                	}
-	                	}
-			        },
-			        {
-			        	type: 'scatter',
-			            coordinateSystem: 'bmap',
-			            data: myData1,
-			            itemStyle : {
-		                	normal:{
-		                		color:"rgba(88,186,247,1)",
-		                		fontSize:12
-		                	}
-	                    },
-	                    symbolSize:8
-			        }
-			        
-			        
-			        
-			        ]
-			    };
-			
-			if (option && typeof option === "object") {
-				myChart.setOption(option);
-				
-				/*
-				clearInterval(timeTicket4);
-				var timeTicket4 = setInterval(function (){
-					var i =Math.floor(Math.random()*18);
-					if (i+6>17) {
-						i=0;
-					}
-					if (i%2 == 0) {
-						option.series[1].data = myData;
-						option.series[0].data[0].coords = [myData[i].value,myData[i+3].value];
-				    	option.series[0].data[1].coords = [myData[i+4].value,myData[i+6].value];
-					}else{
-						option.series[1].data = myData1;
-						option.series[0].data[0].coords = [myData1[i].value,myData1[i+3].value];
-				    	option.series[0].data[1].coords = [myData1[i+4].value,myData1[i+6].value];
-					}
-				    
-				    myChart.setOption(option);
-				},5000);
-				*/
-			}
-	        
-	        },
-	        error:function  () {
-	        	console.log("fail");	
-	        }
-		});
-		
-		//myChart.setOption(option);
+		        
+		        },
+		        error:function  () {
+		        	console.log("fail");	
+		        }
+			});
+		};
+		//执行请求  
+		mapajax();
 	}());
 	
 	
