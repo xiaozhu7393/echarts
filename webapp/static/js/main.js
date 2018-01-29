@@ -339,6 +339,10 @@
 		var count_carr = 0;
 		var count_part = 0;
 		var count_line = 0;
+		var timeTicket4;
+		var timeTicket44;
+		var timeTicket444;
+		var timeTicketAjax;
 		var effect = {
 		    show: true,
 		    period: 30,             // 运动周期，无单位，值越大越慢
@@ -466,13 +470,29 @@
 		function mapajax () {
 			$.ajax({
 				type:"post",
-				//url:"http://182.254.216.232/main/dynamic",
+				url:"http://182.254.216.232/main/dynamic",
+				async:true,
+				success:function  (res) {
+					console.log(res);
+				},
+				error:function  () {
+					console.log("fail");
+				}
+			});
+			$.ajax({
+				type:"post",
 				url:"http://182.254.216.232/main/calculate",
 				//url:"point1.json",
 				async:true,
-				timeout:7200,
 				success:function  (res) {
 					console.log(res);
+					clearInterval(timeTicket4);
+					clearInterval(timeTicket44);
+					clearInterval(timeTicket444);
+					clearInterval(timeTicketAjax);
+					count_carr = 0;
+					count_part = 0;
+					count_line = 0;
 					if (res.carrierList.length !=0 ) 
 					{
 						carrTimeId = carrTimeIdList(res.carrierList);
@@ -703,37 +723,44 @@
 						//myChart.setOption(option);
 						//mapajax();
 						
-						clearInterval(timeTicket4);
-						clearInterval(timeTicket44);
-						clearInterval(timeTicket444);
-						var timeTicket4 = setInterval(function (){
+						
+						timeTicket4 = setInterval(function (){
 							var len = carrTimeId.length;
-							if (count_carr > len) 
+							if (count_carr > len-1) 
 							{
 								count_carr = 0;
 							}
 							myData = carrlist(res.carrierList,carrTimeId[count_carr]);
-							option.series[1].data = myData; 
+							option.series[1].data = myData;
+//							console.log("carrlen : "+len);
+//						    console.log("carrid : "+carrTimeId[count_carr]);
+//						    console.log("carrcount : "+count_carr);
 						    count_carr++
 						    myChart.setOption(option);
+						    
 						},2000);
-						var timeTicket44 = setInterval(function (){
-							var len = partTimeId.length;
-							if (count_part > len) 
-							{
-								count_part = 0;
-							}
-							myData1 = parlist(res.parcelList,partTimeId[count_part]);
-							myLine_all = parlist_line(res.parcelList,partTimeId[count_part]);
-							option.series[2].data = myData1; 
-						    count_part++
-						    myChart.setOption(option);
-						},10000);
-						var timeTicket444 = setInterval(function () {
+						
+//						timeTicket44 = setInterval(function (){
+//							var len = partTimeId.length;
+//							if (count_part > len-1) 
+//							{
+//								count_part = 0;
+//							}
+//							myData1 = parlist(res.parcelList,partTimeId[count_part]);
+//							myLine_all = parlist_line(res.parcelList,partTimeId[count_part]);
+//							option.series[2].data = myData1; 
+//						    count_part++
+//						   	myChart.setOption(option);
+//						   	console.log(myData1)
+//						   	console.log(myLine_all);
+//						},2000);
+						
+						timeTicket444 = setInterval(function () {
 							var _len = myLine_all.length;
 							var list = [];
 							var index = 0;
-							if (count_line*10 > _len) {
+							var sum = Math.abs(count_line*10 - _len);
+							if (sum < 10) {
 								count_line = 0;
 							}
 							index = count_line*10;
@@ -742,8 +769,13 @@
 							}
 							option.series[0].data = list; 
 							count_line++
-							myChart.setOption(option);
+							//myChart.setOption(option);
+//							console.log("allline : "+_len)
+//							console.log("ine : "+Number(index+10))
 						},5000);
+						timeTicketAjax = setInterval(function () {
+							mapajax();
+						},1800000);
 						
 					}
 		        
@@ -755,10 +787,6 @@
 		};
 		//执行请求  
 		mapajax();
-		clearInterval(timeTicketAjax);
-		var timeTicketAjax = setInterval(function () {
-			mapajax();
-		},60000);
 	}());
 	
 	
