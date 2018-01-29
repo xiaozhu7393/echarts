@@ -328,9 +328,17 @@
 	//main
 	(function (){
 		var myChart = echarts.init(document.getElementById('main'));
+		var myCarrList;
+		var myPartList;
 		var myData;
 		var myData1;
+		var myLine_all;
 		var myLine;
+		var carrTimeId;
+		var partTimeId;
+		var count_carr = 0;
+		var count_part = 0;
+		var count_line = 0;
 		var effect = {
 		    show: true,
 		    period: 30,             // 运动周期，无单位，值越大越慢
@@ -457,84 +465,34 @@
 		option = null;
 		function mapajax () {
 			$.ajax({
-				type:"get",
+				type:"post",
 				//url:"http://182.254.216.232/main/dynamic",
-				//url:"http://182.254.216.232/main/calculate",
-				url:"point.json",
+				url:"http://182.254.216.232/main/calculate",
+				//url:"point1.json",
 				async:true,
 				timeout:7200,
 				success:function  (res) {
 					console.log(res);
-					var carrTimeId = carrTimeIdList(res.carrierList);
-					var partTimeId = partTimeIdList(res.parcelList);
-					console.log(carrTimeId)
-					console.log(partTimeId)
-					/*
-					if (res.carrierList.length != 0)
+					if (res.carrierList.length !=0 ) 
 					{
-						var carr = res.carrierList,
-							c_len = carr.length,
-							carrlist = [];
-						for (var i=0;i<c_len;i++)
-						{
-							var item = [],
-								a = Number(carr[i].currentLong),
-								b = Number(carr[i].currentLat);
-							item.push(a);
-							item.push(b);
-							carrlist.push(item);
-						}
+						carrTimeId = carrTimeIdList(res.carrierList);
+						myData = carrlist(res.carrierList,carrTimeId[0]);
+					}
+					if (res.parcelList.length !=0 ) 
+					{
+						partTimeId = partTimeIdList(res.parcelList);
+						myData1 = parlist(res.parcelList,partTimeId[0]);
+						myLine_all = parlist_line(res.parcelList,partTimeId[0]);
 					}
 					
-					if (res.parcelList.length != 0)
-					{
-						var par = res.parcelList,
-							p_len = par.length,
-							parlist = [],
-							parlist_line = [];
-						for (var j=0;j<p_len;j++)
-						{
-							var item_p = [],
-								item_pp = [],
-								a_p = Number(par[j].origLong),
-								b_p = Number(par[j].origLat),
-								a_pp = Number(par[j].destLong),
-								b_pp = Number(par[j].destLat);
-							item_p.push(a_p);
-							item_p.push(b_p);
-							item_pp.push(a_pp);
-							item_pp.push(b_pp);
-							parlist.push(item_p);
-							parlist.push(item_pp);
-						}
-						
-						for (var k=0;k<p_len;k++)
-						{
-							var item_orig = [],
-								item_dest = [],
-								item_all = "";
-								a_orig = Number(par[k].origLong),
-								b_orig = Number(par[k].origLat),
-								a_dest = Number(par[k].destLong),
-								b_dest = Number(par[k].destLat);
-							item_orig.push(a_orig);
-							item_orig.push(b_orig);
-							item_dest.push(a_dest);
-							item_dest.push(b_dest);
-							item_all = {
-					    		"coords":[item_orig,item_dest],
-					    		"lineStyle":{
-					    			"normal":{
-					    				color:"rgba(88,186,247,1)"
-					    			}
-					    		}
-					    	}
-							parlist_line.push(item_all);
-						}
-					}*/
-					myData = carrlist(res.carrierList,120);
-					myData1 = parlist(res.parcelList,128);
-					myLine = parlist_line(res.parcelList,128);
+					
+//					console.log(carrTimeId)
+//					console.log(partTimeId)
+//					
+//					myData = carrlist(res.carrierList,120);
+//					myData1 = parlist(res.parcelList,128);
+//					myLine = parlist_line(res.parcelList,128);
+//					console.log(myLine);
 					/*
 				    var myData = [
 					    {value:[121.485615,31.215004]},
@@ -741,30 +699,53 @@
 				        ]
 				    };
 				
-				if (option && typeof option === "object") {
-					myChart.setOption(option);
-					//mapajax();
-					/*
-					clearInterval(timeTicket4);
-					var timeTicket4 = setInterval(function (){
-						var i =Math.floor(Math.random()*18);
-						if (i+6>17) {
-							i=0;
-						}
-						if (i%2 == 0) {
-							option.series[1].data = myData;
-							option.series[0].data[0].coords = [myData[i].value,myData[i+3].value];
-					    	option.series[0].data[1].coords = [myData[i+4].value,myData[i+6].value];
-						}else{
-							option.series[1].data = myData1;
-							option.series[0].data[0].coords = [myData1[i].value,myData1[i+3].value];
-					    	option.series[0].data[1].coords = [myData1[i+4].value,myData1[i+6].value];
-						}
-					    
-					    myChart.setOption(option);
-					},5000);
-					*/
-				}
+					if (option && typeof option === "object") {
+						//myChart.setOption(option);
+						//mapajax();
+						
+						clearInterval(timeTicket4);
+						clearInterval(timeTicket44);
+						clearInterval(timeTicket444);
+						var timeTicket4 = setInterval(function (){
+							var len = carrTimeId.length;
+							if (count_carr > len) 
+							{
+								count_carr = 0;
+							}
+							myData = carrlist(res.carrierList,carrTimeId[count_carr]);
+							option.series[1].data = myData; 
+						    count_carr++
+						    myChart.setOption(option);
+						},2000);
+						var timeTicket44 = setInterval(function (){
+							var len = partTimeId.length;
+							if (count_part > len) 
+							{
+								count_part = 0;
+							}
+							myData1 = parlist(res.parcelList,partTimeId[count_part]);
+							myLine_all = parlist_line(res.parcelList,partTimeId[count_part]);
+							option.series[2].data = myData1; 
+						    count_part++
+						    myChart.setOption(option);
+						},10000);
+						var timeTicket444 = setInterval(function () {
+							var _len = myLine_all.length;
+							var list = [];
+							var index = 0;
+							if (count_line*10 > _len) {
+								count_line = 0;
+							}
+							index = count_line*10;
+							for (var i=0;i<10;i++) {
+								list.push(myLine_all[index+i]);
+							}
+							option.series[0].data = list; 
+							count_line++
+							myChart.setOption(option);
+						},5000);
+						
+					}
 		        
 		        },
 		        error:function  () {
@@ -774,6 +755,10 @@
 		};
 		//执行请求  
 		mapajax();
+		clearInterval(timeTicketAjax);
+		var timeTicketAjax = setInterval(function () {
+			mapajax();
+		},60000);
 	}());
 	
 	
