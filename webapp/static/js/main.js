@@ -193,12 +193,12 @@
 			    ]
 			};
 		var a = [['5.五角场','4.徐家汇','3.火车站','2.新天地','1.陆家嘴'],['5.徐家汇','4.五角场','3.火车站','2.陆家嘴','1.新天地']];
-		var b = [[12, 34, 50, 88, 100],[20, 30, 50, 90, 100]];
+		var b = [[12, 34, 50, 78, 100],[20, 30, 50, 90, 110],[23, 40, 55, 88, 105]];
 		myChart.setOption(option);
 		clearInterval(timeTicket2);
 		clearInterval(timeTicket22);
 		var timeTicket2 = setInterval(function (){
-			var i =Math.floor(Math.random()*2);
+			var i =Math.floor(Math.random()*3);
 		    //option.yAxis[0].data = a[i];
 		    option.series[0].data = b[i];
 		    
@@ -465,38 +465,55 @@
 			}
 			return list;
 		};
+		//算当前时间
+		function timenow  () {
+			var data = new Date();
+			var hours = data.getHours();
+			var minutes = data.getMinutes();
+			var id = '';
+			//个位
+			var a = minutes%10;
+			if (a <= 5)
+			{
+				var m = minutes - a + 5;
+				id = ((hours*60) + m)/5;
+			}
+			else if (a > 5)
+			{
+				var m = minutes - a + 10;
+				id = ((hours*60) + m)/5;
+			}
+			return id ;
+		};
 		var app = {},
 		option = null;
-		function mapajax () {
+		function mapajax (timeId) {
+//			$.ajax({
+//				type:"get",
+//				url:"http://182.254.216.232:80/main/calculate",
+//				async:true,
+//				success:function  (res) {
+//					//console.log(res);
+//				},
+//				error:function  () {
+//					//console.log("fail");
+//				}
+//			});
 			$.ajax({
-				type:"post",
-				url:"http://182.254.216.232:80/main/calculate",
-				async:true,
-				success:function  (res) {
-					console.log(res);
-				},
-				error:function  () {
-					console.log("fail");
-				}
-			});
-			$.ajax({
-				type:"post",
+				type:"get",
 				url:"http://182.254.216.232:80/main/dynamic",
+				//url:"/echart/echart.json",
 				//url:"point1.json",
+				data:{"timeId":timeId},
 				async:true,
 				success:function  (res) {
 					console.log(res);
-					clearInterval(timeTicket4);
-					clearInterval(timeTicket44);
-					clearInterval(timeTicket444);
 					clearInterval(timeTicketAjax);
-					count_carr = 0;
-					count_part = 0;
-					count_line = 0;
 					if (res.carrierList.length !=0 ) 
 					{
 						carrTimeId = carrTimeIdList(res.carrierList);
 						myData = carrlist(res.carrierList,carrTimeId[0]);
+						//console.log(myData)
 					}
 					if (res.parcelList.length !=0 ) 
 					{
@@ -504,15 +521,8 @@
 						myData1 = parlist(res.parcelList,partTimeId[0]);
 						myLine_all = parlist_line(res.parcelList,partTimeId[0]);
 					}
-					myChart.hideLoading();
 					
-//					console.log(carrTimeId)
-//					console.log(partTimeId)
-//					
-//					myData = carrlist(res.carrierList,120);
-//					myData1 = parlist(res.parcelList,128);
-//					myLine = parlist_line(res.parcelList,128);
-//					console.log(myLine);
+					
 					/*
 				    var myData = [
 					    {value:[121.485615,31.215004]},
@@ -675,7 +685,7 @@
 				            coordinateSystem: 'bmap',
 				            polyline: true,
 				            //data: busLines,
-				            data:myLine,
+				            data:myLine_all,
 				            lineStyle: {
 				                normal: {
 				                    width: 1
@@ -689,7 +699,6 @@
 				            },
 				            zlevel: 1
 				        },
-				        
 				        
 				        {
 				        	type: 'scatter',
@@ -707,11 +716,9 @@
 				            data: myData1,
 				            itemStyle : {
 			                	normal:{
-			                		color:"rgba(88,186,247,1)",
-			                		fontSize:12
+			                		color:"#ddb926"
 			                	}
-		                    },
-		                    symbolSize:8
+		                	}
 				        }
 				        
 				        
@@ -720,76 +727,23 @@
 				    };
 				
 					if (option && typeof option === "object") {
-						//myChart.setOption(option);
-						//mapajax();
-						
-						timeTicket4 = setInterval(function (){
-							var len = carrTimeId.length;
-							if (count_carr > len-1) 
-							{
-								count_carr = 0;
-							}
-							myData = carrlist(res.carrierList,carrTimeId[count_carr]);
-							option.series[1].data = myData;
-//							console.log("carrlen : "+len);
-//						    console.log("carrid : "+carrTimeId[count_carr]);
-//						    console.log("carrcount : "+count_carr);
-						    count_carr++
-						    myChart.setOption(option);
-						    
-						},10000);
-						
-						timeTicket44 = setInterval(function (){
-							var len = partTimeId.length;
-							if (count_part > len-1) 
-							{
-								count_part = 0;
-							}
-							myData1 = parlist(res.parcelList,partTimeId[count_part]);
-							myLine_all = parlist_line(res.parcelList,partTimeId[count_part]);
-							option.series[2].data = myData1; 
-						    count_part++
-						   	myChart.setOption(option);
-//						   	console.log(myData1)
-//						   	console.log(myLine_all);
-							count_line = 0;
-						},20000);
-						
-						timeTicket444 = setInterval(function () {
-							var _len = myLine_all.length;
-							var list = [];
-							var index = 0;
-							var sum = Math.abs(count_line*10 - _len);
-							if (sum < 10) {
-								count_line = 0;
-							}
-							index = count_line*10;
-							for (var i=0;i<10;i++) {
-								list.push(myLine_all[index+i]);
-							}
-							option.series[0].data = list; 
-							count_line++
-							myChart.setOption(option);
-//							console.log("allline : "+_len)
-//							console.log("ine : "+Number(index+10));
-//							console.log(list)
-						},5000);
-						
+						myChart.setOption(option);
 						timeTicketAjax = setInterval(function () {
-							mapajax();
-						},1800000);
-						
+							var id = timenow();
+							mapajax(id);
+						},300000);
 					}
 		        
 		        },
 		        error:function  () {
-		        	console.log("fail");	
+		        	//console.log("fail");	
 		        }
 			});
 		};
 		//执行请求  
-		myChart.showLoading();
-		mapajax();
+		//myChart.showLoading();
+		var id = timenow();
+		mapajax(id);
 	}());
 	
 	
