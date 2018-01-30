@@ -753,7 +753,7 @@
 //						   	console.log(myData1)
 //						   	console.log(myLine_all);
 							count_line = 0;
-						},10000);
+						},20000);
 						
 						timeTicket444 = setInterval(function () {
 							var _len = myLine_all.length;
@@ -773,11 +773,11 @@
 //							console.log("allline : "+_len)
 //							console.log("ine : "+Number(index+10));
 //							console.log(list)
-						},2000);
+						},5000);
 						
 						timeTicketAjax = setInterval(function () {
 							mapajax();
-						},60000);
+						},1800000);
 						
 					}
 		        
