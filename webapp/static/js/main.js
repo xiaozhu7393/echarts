@@ -480,9 +480,9 @@
 				}
 			});
 			$.ajax({
-				type:"post",
-				url:"http://182.254.216.232/main/calculate",
-				//url:"point1.json",
+				type:"get",
+				//url:"http://182.254.216.232/main/calculate",
+				url:"point1.json",
 				async:true,
 				success:function  (res) {
 					console.log(res);
@@ -740,20 +740,21 @@
 						    
 						},2000);
 						
-//						timeTicket44 = setInterval(function (){
-//							var len = partTimeId.length;
-//							if (count_part > len-1) 
-//							{
-//								count_part = 0;
-//							}
-//							myData1 = parlist(res.parcelList,partTimeId[count_part]);
-//							myLine_all = parlist_line(res.parcelList,partTimeId[count_part]);
-//							option.series[2].data = myData1; 
-//						    count_part++
-//						   	myChart.setOption(option);
+						timeTicket44 = setInterval(function (){
+							var len = partTimeId.length;
+							if (count_part > len-1) 
+							{
+								count_part = 0;
+							}
+							myData1 = parlist(res.parcelList,partTimeId[count_part]);
+							myLine_all = parlist_line(res.parcelList,partTimeId[count_part]);
+							option.series[2].data = myData1; 
+						    count_part++
+						   	myChart.setOption(option);
 //						   	console.log(myData1)
 //						   	console.log(myLine_all);
-//						},2000);
+							count_line = 0;
+						},10000);
 						
 						timeTicket444 = setInterval(function () {
 							var _len = myLine_all.length;
@@ -769,13 +770,15 @@
 							}
 							option.series[0].data = list; 
 							count_line++
-							//myChart.setOption(option);
+							myChart.setOption(option);
 //							console.log("allline : "+_len)
-//							console.log("ine : "+Number(index+10))
-						},5000);
+//							console.log("ine : "+Number(index+10));
+//							console.log(list)
+						},2000);
+						
 						timeTicketAjax = setInterval(function () {
 							mapajax();
-						},1800000);
+						},60000);
 						
 					}
 		        
