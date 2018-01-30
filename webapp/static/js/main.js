@@ -468,6 +468,7 @@
 		var app = {},
 		option = null;
 		function mapajax () {
+			myChart.showLoading();
 			$.ajax({
 				type:"post",
 				url:"http://182.254.216.232/main/dynamic",
@@ -504,7 +505,7 @@
 						myData1 = parlist(res.parcelList,partTimeId[0]);
 						myLine_all = parlist_line(res.parcelList,partTimeId[0]);
 					}
-					
+					myChart.hideLoading();
 					
 //					console.log(carrTimeId)
 //					console.log(partTimeId)
@@ -723,7 +724,6 @@
 						//myChart.setOption(option);
 						//mapajax();
 						
-						
 						timeTicket4 = setInterval(function (){
 							var len = carrTimeId.length;
 							if (count_carr > len-1) 
@@ -738,7 +738,7 @@
 						    count_carr++
 						    myChart.setOption(option);
 						    
-						},2000);
+						},10000);
 						
 						timeTicket44 = setInterval(function (){
 							var len = partTimeId.length;
