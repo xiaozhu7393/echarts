@@ -507,6 +507,8 @@
 				data:{"timeId":timeId},
 				async:true,
 				success:function  (res) {
+					var minutes = (new Date()).getMinutes();
+					console.log(minutes)
 					console.log(res);
 					clearInterval(timeTicketAjax);
 					if (res.carrierList.length !=0 ) 
@@ -730,6 +732,7 @@
 						myChart.setOption(option);
 						timeTicketAjax = setInterval(function () {
 							var id = timenow();
+							console.log(id)
 							mapajax(id);
 						},300000);
 					}
@@ -743,7 +746,7 @@
 		//执行请求  
 		//myChart.showLoading();
 		var id = timenow();
-		mapajax(134);
+		mapajax(id);
 	}());
 	
 	
