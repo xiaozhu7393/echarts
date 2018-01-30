@@ -468,10 +468,9 @@
 		var app = {},
 		option = null;
 		function mapajax () {
-			myChart.showLoading();
 			$.ajax({
 				type:"post",
-				url:"http://182.254.216.232/main/dynamic",
+				//url:"http://182.254.216.232/main/calculate",
 				async:true,
 				success:function  (res) {
 					console.log(res);
@@ -482,7 +481,7 @@
 			});
 			$.ajax({
 				type:"get",
-				//url:"http://182.254.216.232/main/calculate",
+				//url:"http://182.254.216.232/main/dynamic",
 				url:"point1.json",
 				async:true,
 				success:function  (res) {
@@ -789,6 +788,7 @@
 			});
 		};
 		//执行请求  
+		myChart.showLoading();
 		mapajax();
 	}());
 	
