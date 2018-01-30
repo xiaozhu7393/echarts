@@ -743,7 +743,7 @@
 		//执行请求  
 		//myChart.showLoading();
 		var id = timenow();
-		mapajax(id);
+		mapajax(134);
 	}());
 	
 	
