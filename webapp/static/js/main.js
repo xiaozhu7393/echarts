@@ -470,7 +470,7 @@
 		function mapajax () {
 			$.ajax({
 				type:"post",
-				//url:"http://182.254.216.232/main/calculate",
+				url:"http://182.254.216.232:80/main/calculate",
 				async:true,
 				success:function  (res) {
 					console.log(res);
@@ -480,9 +480,9 @@
 				}
 			});
 			$.ajax({
-				type:"get",
-				//url:"http://182.254.216.232/main/dynamic",
-				url:"point1.json",
+				type:"post",
+				url:"http://182.254.216.232:80/main/dynamic",
+				//url:"point1.json",
 				async:true,
 				success:function  (res) {
 					console.log(res);
