@@ -343,9 +343,10 @@
 		var timeTicket44;
 		var timeTicket444;
 		var timeTicketAjax;
+		var lineCount;
 		var effect = {
 		    show: true,
-		    period: 30,             // 运动周期，无单位，值越大越慢
+		    period: 10,             // 运动周期，无单位，值越大越慢
 		    color: '#fff',
 		    shadowColor: 'rgba(220,220,220,0.4)',
 		    shadowBlur : 5 
@@ -485,6 +486,21 @@
 			}
 			return id ;
 		};
+		//循环输出飞线
+		function lineFly (arr,count,x) {
+			var _len = arr.length;
+			var list = [];
+			var index = 0;
+			var sum = Math.abs(count*x - _len);
+			if (sum < x) {
+				count = 0;
+			}
+			index = count*x;
+			for (var i=0;i<x;i++) {
+				list.push(arr[index+i]);
+			}
+			return list;
+		};
 		var app = {},
 		option = null;
 		function mapajax (timeId) {
@@ -508,9 +524,11 @@
 				async:true,
 				success:function  (res) {
 					var minutes = (new Date()).getMinutes();
-					console.log(minutes)
-					console.log(res);
+					//console.log(minutes)
+					//console.log(res);
 					clearInterval(timeTicketAjax);
+					clearInterval(timeTicket444);
+					count_line = 0;
 					if (res.carrierList.length !=0 ) 
 					{
 						carrTimeId = carrTimeIdList(res.carrierList);
@@ -525,6 +543,8 @@
 						partTimeId = partTimeIdList(res.parcelList);
 						myData1 = parlist(res.parcelList,partTimeId[0]);
 						myLine_all = parlist_line(res.parcelList,partTimeId[0]);
+						lineCount =  Math.ceil( (myLine_all.length)/30 );
+						myLine = lineFly(myLine_all,0,lineCount);
 					}
 					else
 					{
@@ -695,7 +715,7 @@
 				            coordinateSystem: 'bmap',
 				            polyline: true,
 				            //data: busLines,
-				            data:myLine_all,
+				            data:myLine,
 				            lineStyle: {
 				                normal: {
 				                    width: 1
@@ -738,9 +758,15 @@
 				
 					if (option && typeof option === "object") {
 						myChart.setOption(option);
+						timeTicket444 = setInterval(function () {
+							count_line++
+							var l_list = lineFly(myLine_all,count_line,lineCount);
+							option.series[0].data = l_list; 
+							myChart.setOption(option);
+						},10000);
 						timeTicketAjax = setInterval(function () {
 							var id = timenow();
-							console.log(id)
+							//console.log(id)
 							mapajax(id);
 						},300000);
 					}
@@ -880,7 +906,7 @@
 		var myChart = echarts.init(document.getElementById('right-line'));
 		var option = {
 			    title : {
-			        text: 'New Parcels occurred in last one hour',
+			        text: 'New Parcels occurred in last five hour',
 			        textStyle : {
 			            color: '#fff'
 			        }
