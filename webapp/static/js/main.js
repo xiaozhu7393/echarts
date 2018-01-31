@@ -572,7 +572,7 @@
 				    option = {
 				        bmap: {
 				            center: [121.491280, 31.220435],
-				            zoom: 13,
+				            zoom: 12,
 				            roam: true,
 				            mapStyle: {
 				              'styleJson': [
@@ -748,7 +748,7 @@
 			                		color:"#ddb926",
 			                	}
 		                	},
-				            symbolSize:7
+				            symbolSize:5
 				        },
 				        {
 				        	type: 'scatter',
@@ -759,7 +759,7 @@
 			                		color:"#ddb926",
 			                	}
 		                	},
-		                	symbolSize:7
+		                	symbolSize:5
 				        }
 				        
 				        
