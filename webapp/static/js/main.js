@@ -515,13 +515,21 @@
 					{
 						carrTimeId = carrTimeIdList(res.carrierList);
 						myData = carrlist(res.carrierList,carrTimeId[0]);
-						//console.log(myData)
+					}
+					else
+					{
+						myData = [];
 					}
 					if (res.parcelList.length !=0 ) 
 					{
 						partTimeId = partTimeIdList(res.parcelList);
 						myData1 = parlist(res.parcelList,partTimeId[0]);
 						myLine_all = parlist_line(res.parcelList,partTimeId[0]);
+					}
+					else
+					{
+						myData1 = [];
+						myLine_all = [];
 					}
 					
 					
