@@ -492,13 +492,24 @@
 			var list = [];
 			var index = 0;
 			var sum = Math.abs(count*x - _len);
-			if (sum < x) {
+			if (sum <= x) 
+			{
 				count = 0;
+				index = count*x;
+				for (var i=0;i<sum;i++) 
+				{
+					list.push(arr[index+i]);
+				}
 			}
-			index = count*x;
-			for (var i=0;i<x;i++) {
-				list.push(arr[index+i]);
+			else
+			{
+				index = count*x;
+				for (var i=0;i<x;i++) 
+				{
+					list.push(arr[index+i]);
+				}
 			}
+			
 			return list;
 		};
 		var app = {},
@@ -523,8 +534,6 @@
 				data:{"timeId":timeId},
 				async:true,
 				success:function  (res) {
-					var minutes = (new Date()).getMinutes();
-					//console.log(minutes)
 					//console.log(res);
 					clearInterval(timeTicketAjax);
 					clearInterval(timeTicket444);
@@ -563,7 +572,7 @@
 				    option = {
 				        bmap: {
 				            center: [121.491280, 31.220435],
-				            zoom: 12,
+				            zoom: 13,
 				            roam: true,
 				            mapStyle: {
 				              'styleJson': [
@@ -736,9 +745,10 @@
 				            data: myData,
 				            itemStyle : {
 			                	normal:{
-			                		color:"#ddb926"
+			                		color:"#ddb926",
 			                	}
-		                	}
+		                	},
+				            symbolSize:7
 				        },
 				        {
 				        	type: 'scatter',
@@ -746,9 +756,10 @@
 				            data: myData1,
 				            itemStyle : {
 			                	normal:{
-			                		color:"#ddb926"
+			                		color:"#ddb926",
 			                	}
-		                	}
+		                	},
+		                	symbolSize:7
 				        }
 				        
 				        
