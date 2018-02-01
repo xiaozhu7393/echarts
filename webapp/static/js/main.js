@@ -931,7 +931,7 @@
 		var date=new Date();
 		var minute=date.getMinutes();//分
 		var second=date.getSeconds();//秒
-		var time_i = ( (60-minute)*60+second )*1000;
+		var time_i = ( (60-minute)*60+ (60-second) )*1000;
 		var option = {
 			    title : {
 			        text: 'New Parcels occurred in last five hour',
