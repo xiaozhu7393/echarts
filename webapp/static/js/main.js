@@ -20,7 +20,6 @@
 		var second=date.getSeconds();//秒
 		var time=year+"-"+add0((month+1))+"-"+add0(data)+" "+add0(hours)+":"+add0(minute)+":"+add0(second);
 		oDiv.innerHTML=time;
-		var time_i = ( (60-minute)*60+second )*1000;
 	};
 	//补位 当某个字段不是两位数时补0
 	function add0(m){return m<10?'0'+m:m };

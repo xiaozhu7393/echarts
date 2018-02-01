@@ -4,6 +4,14 @@
 	background-position: left top;
 	background-repeat: no-repeat;
 }*/
+
+/*去除百度地图logo*/
+.BMap_cpyCtrl {
+    display:none;
+}
+.anchorBL{
+    display:none;
+}
 .g-bg{
 	background-color: rgba(12,12,37,0.9);
 }
