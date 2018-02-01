@@ -20,6 +20,7 @@
 		var second=date.getSeconds();//秒
 		var time=year+"-"+add0((month+1))+"-"+add0(data)+" "+add0(hours)+":"+add0(minute)+":"+add0(second);
 		oDiv.innerHTML=time;
+		var time_i = ( (60-minute)*60+second )*1000;
 	};
 	//补位 当某个字段不是两位数时补0
 	function add0(m){return m<10?'0'+m:m };
@@ -216,6 +217,9 @@
 	//left-line
 	(function  () {
 		var myChart = echarts.init(document.getElementById('left-line'));
+		var date_s=new Date();
+		var second=date_s.getSeconds();//秒
+		var second_s=(60-second)*1000;//秒
 		var option = {
 			    title : {
 			        text: 'transportation/demands',
@@ -285,7 +289,7 @@
 			var minute=date.getMinutes();//分
 			for (var i=6;i>-1;i--) 
 			{
-				var m = minute - i;
+				var m = minute - i - 1;
 				var h = hours - 1;
 				if (m < 0) 
 				{
@@ -313,16 +317,23 @@
 		myChart.setOption(option);
 		var b = [5.8, 5.9, 6.0, 6.0, 6.1, 6.1, 6.2];
 		var bb = [6.3, 6.2, 6.0, 6.1, 6.0, 6.3, 6.1];
-		clearInterval(timeTicket3);
-		var timeTicket3 = setInterval(function (){
+		setTimeout(function  () {
 			var i =Math.floor(Math.random()*7);
 			b.shift();
 			b.push(bb[i]);
 		    option.xAxis[0].data = getTime();
 		    option.series[0].data = b;
 		    myChart.setOption(option, true);
-		},60000);
-		
+			clearInterval(timeTicket3);
+			var timeTicket3 = setInterval(function (){
+				var i =Math.floor(Math.random()*7);
+				b.shift();
+				b.push(bb[i]);
+			    option.xAxis[0].data = getTime();
+			    option.series[0].data = b;
+			    myChart.setOption(option, true);
+			},60000);
+		},second_s);
 	}());
 	
 	//main
@@ -495,6 +506,7 @@
 			if (sum <= x) 
 			{
 				count = 0;
+				count_line = -1;
 				index = count*x;
 				for (var i=0;i<sum;i++) 
 				{
@@ -772,6 +784,7 @@
 						timeTicket444 = setInterval(function () {
 							count_line++
 							var l_list = lineFly(myLine_all,count_line,lineCount);
+							//console.log(l_list)
 							option.series[0].data = l_list; 
 							myChart.setOption(option);
 						},10000);
@@ -915,6 +928,10 @@
 	//right-line
 	(function (){
 		var myChart = echarts.init(document.getElementById('right-line'));
+		var date=new Date();
+		var minute=date.getMinutes();//分
+		var second=date.getSeconds();//秒
+		var time_i = ( (60-minute)*60+second )*1000;
 		var option = {
 			    title : {
 			        text: 'New Parcels occurred in last five hour',
@@ -1004,16 +1021,23 @@
 		myChart.setOption(option);
 		var b = [3100, 2900, 3117, 3019, 3004, 3008];
 		var bb = [3140, 3000, 3100, 3119, 3034, 3028];
-		clearInterval(timeTicket7);
-		var timeTicket7 = setInterval(function (){
+		setTimeout(function (){
 			var i =Math.floor(Math.random()*6);
 			b.shift();
 			b.push(bb[i]);
 		    option.xAxis[0].data = getTimeHour();
 		    option.series[0].data = b;
-		    
 		    myChart.setOption(option, true);
-		},3600000);
+			clearInterval(timeTicket7);
+			var timeTicket7 = setInterval(function (){
+				var i =Math.floor(Math.random()*6);
+				b.shift();
+				b.push(bb[i]);
+			    option.xAxis[0].data = getTimeHour();
+			    option.series[0].data = b;
+			    myChart.setOption(option, true);
+			},3600000);
+		},time_i)
 	}());
                                                    
  	
