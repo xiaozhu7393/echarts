@@ -1520,7 +1520,7 @@
 		var date=new Date();
 		var minute=date.getMinutes();//分
 		var second=date.getSeconds();//秒
-		var time_i = ( (60-minute)*60+ (60-second) )*1000;
+		var time_i = ( (59-minute)*60+ (60-second) )*1000;
 		var option = {
 			    title : {
 			        text: 'New Parcels occurred in last five hour',
@@ -1728,6 +1728,7 @@
 			option.series[0].data = b;
 			myChart.setOption(option);
 			setTimeout(function (){
+				console.log(1)
 				b.shift();
 				b.push(0);
 			    option.xAxis[0].data = getTimeHour();
@@ -1743,7 +1744,6 @@
 				    myChart.setOption(option, true);
 				},3600000);
 			},time_i);
-			console.log(time_i)
 			
 			setTimeout(function (){
 				clearInterval(timeTicket7_1);
