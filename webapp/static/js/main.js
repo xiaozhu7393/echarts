@@ -15,8 +15,9 @@
 		var end_time=year+"-"+add0((month+1))+"-"+add0(data)+" "+add0(18)+":"+add0(0)+":"+add0(0);
 		$('#para_start_time').text(start_time);
 		$('#para_end_time').text(end_time);
-		$('#para_carrier_num').text(550);
-		$('#speed_per_hours').text("20 (km/h)");
+		$('#para_normal_carrier_num').text(550);
+		$('#para_SwoT_carrier_num').text(50);
+		$('#eff_time').text("3");
 		$('#refresh_time').text("5 (mins)");
 		//时间插件
 		$("#start_time").jeDate({
@@ -1038,7 +1039,7 @@
 				data:{"timeId":timeId},
 				async:true,
 				success:function  (data) {
-					//console.log(data);
+					console.log(data);
 					clearInterval(timeTicketAjax);
 					clearInterval(timeTicket444);
 					count_line = 0;
@@ -1072,7 +1073,7 @@
 						myData1 = [];
 						myLine_all = [];
 					}
-					
+					console.log(res)
 					
 					/*
 				    var myData = [
@@ -1290,7 +1291,8 @@
 						},10000);
 						timeTicketAjax = setInterval(function () {
 							var id = timenow();
-							if (id < 120 && id >215) 
+							console.log(id)
+							if (id < 120 || id >215) 
 							{
 								mapajax(id,true);
 							}
@@ -1429,7 +1431,7 @@
 			    xAxis : [
 			        {
 			            type : 'category',
-			            data : ['unattended','Delivered','Pickup'],
+			            data : ['unattended','Pickup','Delivered'],
 			            axisLabel:{  
 		                    interval:0,  
 		                    rotate:-45,//倾斜度 -90 至 90 默认为0  
@@ -1619,9 +1621,10 @@
 			
 			        {
 			            type:'line',
+			            areaStyle: {normal: {}},
 			            data:[0, 0, 0, 0, 0, 0],
 			            itemStyle:{
-			                normal:{color:'#58f4e6'}
+			                normal:{color:'#2078d1'}
 			            }
 			            
 			           
@@ -1632,19 +1635,31 @@
 			var arr = [];//
 			var date=new Date();
   			var hours=date.getHours();//小时
-			for (var i=5;i>0;i--) 
-			{
-				var h = hours - i;
-				if (h < 0) 
+  			var h_h = hours - 10;
+  			if (h_h >= 0 && h_h <=3) 
+  			{
+  				for (var i=0;i<4;i++) 
+  				{
+  					var add = 10+i + ":00";
+					arr.push(add);
+  				}
+  			}
+  			else
+  			{
+				for (var i=3;i>=0;i--) 
 				{
-					var hh = 24 - Math.abs(h);
+					var h = hours - i;
+					if (h < 0) 
+					{
+						var hh = 24 - Math.abs(h);
+					}
+					else
+					{
+						var hh = add0(h);
+					}
+					var add = hh + ":00";
+					arr.push(add);
 				}
-				else
-				{
-					var hh = add0(h);
-				}
-				var add = hh + ":00";
-				arr.push(add);
 			}
 			return arr;
 		};
@@ -1770,7 +1785,6 @@
 			option.series[0].data = b;
 			myChart.setOption(option);
 			setTimeout(function (){
-				console.log(1)
 				b.shift();
 				b.push(0);
 			    option.xAxis[0].data = getTimeHour();

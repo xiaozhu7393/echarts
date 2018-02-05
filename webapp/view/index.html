@@ -38,7 +38,7 @@
 					<h1>Xboost Dynamic Network Dashboard</h1>
 					<div>
 						<time>Current Time：<span id="time"></span></time>
-						<button class="btn btn-primary" data-toggle="modal" data-target="#setModal"><i class="iconfont icon-setting"></i> Settings Parameters</button>
+						<button class="btn btn-primary alt" data-toggle="modal" data-target="#setModal"><i class="iconfont icon-setting"></i> Settings Parameters</button>
 					</div>
 				</div>
 				<!--set info-->
@@ -48,10 +48,11 @@
 						<div class="box-show">
 							<h3 class="text-center">Parameters View</h3>
 							<ul class="info-contect">
-								<li>No. of Carrier : <span id="para_carrier_num">--</span></li>
+								<li>No. of Normal Carrier : <span id="para_normal_carrier_num">--</span></li>
+								<li>No. of SwoT Carrier : <span id="para_SwoT_carrier_num">--</span></li>
 								<li>Start time : <span id="para_start_time">--</span></li>
-								<li>Stop time : <span id="para_end_time">--</span></li>
-								<li>Speed per hour : <span id="speed_per_hours">--</span></li>
+								<li>End time : <span id="para_end_time">--</span></li>
+								<li>Effective Delivey Time : <span id="eff_time">--</span></li>
 								<li>Refresh time : <span id="refresh_time">--</span></li>
 							</ul>
 						</div>
@@ -63,12 +64,12 @@
 					<!---->
 					<div>
 						<div class="box-show">
-							<h3 class="text-center">Summary of current time period</h3>
+							<h3 class="text-center">Current Status</h3>
 							<ul class="info-contect">
-								<li>NO. of effective working Carrier: <span>--</span></li>
+								<li>NO. of working Carrier: <span>--</span></li>
 								<li>NO. of new demand: <span>--</span></li>
 								<li>Total income: <span>--</span></li>
-								<li>Total expenditure: <span>--</span></li>
+								<li>Total cost: <span>--</span></li>
 							</ul>
 						</div>
 						<span class="line1 linealt"></span>
@@ -115,7 +116,7 @@
 		
 		<!--Modal setting-->
 		<div class="modal fade" id="setModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		    <div class="modal-dialog" role="document">
+		    <div class="modal-dialog" role="document" style="max-width: 600px;">
 			    <div class="modal-content">
 			        <div class="modal-header">
 			        	<h4 class="modal-title" id="myModalLabel">Key assumptions and parameters</h4>
@@ -140,6 +141,11 @@
 							    <label for="cut_time">Demand cut time : </label>
 							    <input type="text" class="form-control" id="cut_time"  readonly="readonly"/>
 							</div>
+							<div class="form-group">
+							    <label for="refresh_frequency">Refresh frequency : </label>
+							    <input type="text" class="form-control" id="refresh_frequency" />
+							    <span> (mins)</span>
+							</div>
 			        	</div>
 			        	<!--parameter-->
 			        	<div class="para-info">
@@ -152,14 +158,17 @@
 							<div class="form-group">
 							    <label for="">Capocity of Carrier: </label>
 							    <input type="text" class="form-control" id=""  />
+							    <span> (pieces)</span>
 							</div>
 							<div class="form-group">
 							    <label for="">Speed of Carrier : </label>
 							    <input type="text" class="form-control" id=""  />
+							    <span> (km/h)</span>
 							</div>
 							<div class="form-group">
 							    <label for="">Swot Carrier <span style="color: red;">@2</span> : </label>
 							    <input type="text" class="form-control" id=""  />
+							    <span> (pieces)</span>
 							</div>
 							<div class="form-group">
 							    <label for="">Capocity of Swot Carrier : </label>
@@ -189,6 +198,7 @@
 		<script src="../static/js/jquery.min.js"></script>
 		<script src="../static/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../static/js/popper.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="../static/js/flex.js" type="text/javascript" charset="utf-8"></script>-->
 		<!--<script type="text/javascript" src="../static/js/echarts.js" ></script>-->
 		<!--<script type="text/javascript" src="../static/js/echarts-all.js" ></script>-->
 		<script type="text/javascript" src="../static/js/echarts-all-3.js"></script>
