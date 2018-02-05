@@ -1,6 +1,44 @@
 ﻿$(function (){
 	var list_3 = "";
 	var list_7 = "";
+	/*
+	 * 
+	 * modal time
+	 * 
+	 */
+	(function (){
+		var date=new Date();
+		var year=date.getFullYear();//当前年份
+		var month=date.getMonth();//当前月份
+		var data=date.getDate();//天
+		var start_time=year+"-"+add0((month+1))+"-"+add0(data)+" "+add0(10)+":"+add0(0)+":"+add0(0);
+		var end_time=year+"-"+add0((month+1))+"-"+add0(data)+" "+add0(18)+":"+add0(0)+":"+add0(0);
+		$('#para_start_time').text(start_time);
+		$('#para_end_time').text(end_time);
+		$('#para_carrier_num').text(550);
+		$('#speed_per_hours').text("20 (km/h)");
+		$('#refresh_time').text("5 (mins)");
+		//时间插件
+		$("#start_time").jeDate({
+			skinCell:"jedateblue", 
+			isinitVal:false, 
+			format:"hh:mm"
+		});
+		$("#end_time").jeDate({
+			skinCell:"jedateblue", 
+			isinitVal:false, 
+			format:"hh:mm"
+		});
+		$("#cut_time").jeDate({
+			skinCell:"jedateblue", 
+			isinitVal:false, 
+			format:"hh:mm"
+		});
+		//
+		$('#save_para').click(function  () {
+			$('#setModal').modal("hide");
+		});
+	}());
 	
 	//time
 	window.onload=function(){
@@ -23,7 +61,7 @@
 		var time=year+"-"+add0((month+1))+"-"+add0(data)+" "+add0(hours)+":"+add0(minute)+":"+add0(second);
 		var time_10 = year+"-"+add0((month+1))+"-"+add0(data)+" "+add0(10)+":"+add0(0)+":"+add0(0);
 		var time_10_w = year+"-"+add0((month+1))+"-"+add0(data+1)+" "+add0(10)+":"+add0(0)+":"+add0(0);
-		if (time < time_10) 
+		if (time <= time_10) 
 		{
 			i_time = ((new Date(time_10)).getTime()) - ((new Date(time)).getTime());
 		}
@@ -44,7 +82,7 @@
 		var second=date.getSeconds();//秒
 		var time=year+"-"+add0((month+1))+"-"+add0(data)+" "+add0(hours)+":"+add0(minute)+":"+add0(second);
 		var time_18 = year+"-"+add0((month+1))+"-"+add0(data)+" "+add0(18)+":"+add0(0)+":"+add0(0);
-		if (time < time_18) 
+		if (time <= time_18) 
 		{
 			i_time = ((new Date(time_18)).getTime()) - ((new Date(time)).getTime());
 		}
@@ -73,7 +111,7 @@
 		var second=date.getSeconds();//秒
 		var time=add0(hours)+":"+add0(minute)+":"+add0(second);
 		//console.log(time)
-		if (time >= "10:00:00" && time <= "18:00:00") 
+		if (time >= "10:00:00" && time < "18:00:00") 
 		{
 			return true;
 		}
@@ -938,14 +976,17 @@
 			var a = minutes%10;
 			if (a <= 5)
 			{
-				var m = minutes - a + 5;
+				var m = minutes - a;
 				id = ((hours*60) + m)/5;
 			}
 			else if (a > 5)
 			{
-				var m = minutes - a + 10;
+				var m = minutes - a + 5;
 				id = ((hours*60) + m)/5;
 			}
+//			console.log(hours)
+//			console.log(minutes)
+//			console.log(id)
 			return id ;
 		};
 		//循环输出飞线
@@ -1278,6 +1319,7 @@
 			var id = timenow();
 			mapajax(id,true);
 			setTimeout(function  () {
+				var id = timenow();
 				mapajax(id);
 			},i_time);
 		}
