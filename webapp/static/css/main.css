@@ -204,4 +204,16 @@ body,html{
 	font-size: 1em;
 	padding: 5px;
 	border-radius: 5px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+.box-show.alt {
+	position: relative;
+	padding-top: 10px;
+	padding-right: 10px;
+}
+.box-show.alt h3,
+.box-show.alt ul {
+	padding-left: 20px;
 }
