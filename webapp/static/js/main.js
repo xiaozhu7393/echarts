@@ -1129,6 +1129,66 @@
 					  ];
 					
 					  */
+					function renderItem(params, api) {
+					    var coords = [
+					        [121.442293,31.280756],
+					        [121.381352,31.265448],
+					        [121.433094,31.235317],
+					        [121.469889,31.239763],
+					        [121.485986,31.2773]
+					    ];
+					    var points = [];
+					    for (var i = 0; i < coords.length; i++) {
+					        points.push(api.coord(coords[i]));
+					    }
+					    var color = api.visual('color');
+					
+					    return {
+					        type: 'polygon',
+					        shape: {
+					            points: echarts.graphic.clipPointsByRect(points, {
+					                x: params.coordSys.x,
+					                y: params.coordSys.y,
+					                width: params.coordSys.width,
+					                height: params.coordSys.height
+					            })
+					        },
+					        style: api.style({
+					            fill: color,
+					            stroke: echarts.color.lift(color)
+					        })
+					    };
+					};
+					function renderItem1(params, api) {
+					    var coords = [
+					        [121.438843,31.207647],
+					        [121.446317,31.17206],
+					        [121.507833,31.200729],
+					        [121.529105,31.250136],
+					        [121.473338,31.237293]
+					    ];
+					    var points = [];
+					    for (var i = 0; i < coords.length; i++) {
+					        points.push(api.coord(coords[i]));
+					    }
+					    var color = api.visual('color');
+					
+					    return {
+					        type: 'polygon',
+					        shape: {
+					            points: echarts.graphic.clipPointsByRect(points, {
+					                x: params.coordSys.x,
+					                y: params.coordSys.y,
+					                width: params.coordSys.width,
+					                height: params.coordSys.height
+					            })
+					        },
+					        style: api.style({
+					            fill: color,
+					            stroke: echarts.color.lift(color)
+					        })
+					    };
+					};
 				    option = {
 				        bmap: {
 				            center: [121.491280, 31.220435],
@@ -1323,36 +1383,35 @@
 				        },
 				        
 				        {
-			                name: '数据名称',
-			                type: 'map',
-			                mapType: '上海',
-			                selectedMode : 'single',
-			                itemStyle:{
-			                    normal:{label:{show:true}},
-			                    emphasis:{label:{show:true}}
-			                },
-			                data:[
-			                    {name: '崇明县',value: Math.round(Math.random()*1000)},
-			                    {name: '宝山区',value: Math.round(Math.random()*1000)},
-			                    {name: '嘉定区',value: Math.round(Math.random()*1000)},
-			                    {name: '青浦区',value: Math.round(Math.random()*1000)},
-			                    {name: '杨浦区',value: Math.round(Math.random()*1000)},
-			                    {name: '虹口区',value: Math.round(Math.random()*1000)},
-			                    {name: '闸北区',value: Math.round(Math.random()*1000)},
-			                    {name: '普陀区',value: Math.round(Math.random()*1000)},
-			                    {name: '静安区',value: Math.round(Math.random()*1000)},
-			                    {name: '黄浦区',value: Math.round(Math.random()*1000)},
-			                    {name: '卢湾区',value: Math.round(Math.random()*1000)},
-			                    {name: '长宁区',value: Math.round(Math.random()*1000)},
-			                    {name: '徐汇区',value: Math.round(Math.random()*1000)},
-			                    {name: '浦东新区',value: Math.round(Math.random()*1000)},
-			                    {name: '松江区',value: Math.round(Math.random()*1000)},
-			                    {name: '闵行区',value: Math.round(Math.random()*1000)},
-			                    {name: '金山区',value: Math.round(Math.random()*1000)},
-			                    {name: '奉贤区',value: Math.round(Math.random()*1000)},
-			                    {name: '南汇区',value: Math.round(Math.random()*1000)}
-			                ]
-			            }
+				            type: 'custom',
+				            coordinateSystem: 'bmap',
+				            renderItem: renderItem,
+				            itemStyle: {
+				                normal: {
+				                    opacity: 0.5,
+				                    color:'blue'
+				                }
+				            },
+				            animation: false,
+				            silent: true,
+				            data: [0],
+				            z: -10
+				        },
+				        {
+				            type: 'custom',
+				            coordinateSystem: 'bmap',
+				            renderItem: renderItem1,
+				            itemStyle: {
+				                normal: {
+				                    opacity: 0.5,
+				                    color:'red'
+				                }
+				            },
+				            animation: false,
+				            silent: true,
+				            data: [0],
+				            z: -10
+				        }
 				        
 				        
 				        
