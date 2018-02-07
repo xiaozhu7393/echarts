@@ -159,8 +159,8 @@
 			        }
 			    },
 			    grid: {
-				    left: '2%',
-					right: '2%',
+				    left: '10%',
+					right: '10%',
 					bottom: '3%',
 					containLabel: true
 				},
@@ -170,6 +170,10 @@
 			    calculable : true,
 			    xAxis : [
 			        {
+			        	name:'(hours)',
+			        	nameTextStyle:{
+			            	color:"#fff"
+			            },
 			            type : 'category',
 			            data : ['0.5','1','1.5'],
 			            axisLabel:{  
@@ -185,7 +189,12 @@
 			    ],
 			    yAxis : [
 			        {
+			        	name:'No. of Express',
 			            type : 'value',
+			            nameTextStyle:{
+			            	color:"#fff",
+			            	
+			            },
 			            splitLine :{
 			            	show:true,
 			            	lineStyle:{
@@ -195,12 +204,13 @@
 							},
 			            },
 			            axisLabel:{  
-		                    margin:5,  
+		                    margin:5,
 		                    textStyle:{  
 		                        fontWeight:"bolder",  
 		                        color:"#fff"  
 		                    }  
-		               }
+		                }
+		                
 			        }
 			    ],
 			    series : [
