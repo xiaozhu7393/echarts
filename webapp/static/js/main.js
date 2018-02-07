@@ -150,17 +150,19 @@
 	//left-pie
 	(function (){
 		var myChart = echarts.init(document.getElementById('left-pie'));
+		window.onresize = myChart.resize; 
 		var status = fnDate_hours();
 		var option = {
 			    title : {
 			        text: 'Delay time distribution',
 			        textStyle : {
-			            color: '#fff'
+			            color: '#fff',
+			            fontSize:'14'
 			        }
 			    },
 			    grid: {
-				    left: '10%',
-					right: '10%',
+				    left: '5%',
+					right: '2%',
 					bottom: '3%',
 					containLabel: true
 				},
@@ -170,12 +172,11 @@
 			    calculable : true,
 			    xAxis : [
 			        {
-			        	name:'(hours)',
 			        	nameTextStyle:{
 			            	color:"#fff"
 			            },
 			            type : 'category',
-			            data : ['0.5','1','1.5'],
+			            data : ['0.5h','1h','1.5h'],
 			            axisLabel:{  
 		                    interval:0,  
 		                    rotate:0,//倾斜度 -90 至 90 默认为0  
@@ -189,11 +190,10 @@
 			    ],
 			    yAxis : [
 			        {
-			        	name:'No. of Express',
+			        	name:'No. of parcel',
 			            type : 'value',
 			            nameTextStyle:{
 			            	color:"#fff",
-			            	
 			            },
 			            splitLine :{
 			            	show:true,
@@ -307,6 +307,7 @@
 	//left-bar
 	(function (){
 		var myChart = echarts.init(document.getElementById('left-bar'));
+		window.onresize = myChart.resize; 
 		var status = fnDate_hours();
 		var option = {
 			    title : {
@@ -315,7 +316,7 @@
         			y:'top',
 			        textStyle : {
 			            color: '#fff',
-			            fontSize:18
+			            fontSize:'14'
 			        },
 			    },
 			    tooltip : {
@@ -543,6 +544,7 @@
 	//left-line
 	(function  () {
 		var myChart = echarts.init(document.getElementById('left-line'));
+		window.onresize = myChart.resize; 
 		var date_s=new Date();
 		var status = fnDate_hours();
 		var second=date_s.getSeconds();//秒
@@ -551,11 +553,12 @@
 			    title : {
 			        text: 'transportation/demands',
 			        textStyle : {
-			            color: '#fff'
+			            color: '#fff',
+			            fontSize:'14'
 			        }
 			    },
 			    grid: {
-				    left: '2%',
+				    left: '5%',
 					right: '2%',
 					bottom: '3%',
 					containLabel: true
@@ -581,6 +584,10 @@
 			    yAxis : [
 			        {
 			            type : 'value',
+			            name:'Capacity index',
+			            nameTextStyle:{
+			            	color:'#fff'
+			            },
 			            splitLine :{
 			            	show:true,
 			            	lineStyle:{
@@ -879,6 +886,7 @@
 	//main
 	(function (){
 		var myChart = echarts.init(document.getElementById('main'));
+		window.onresize = myChart.resize; 
 		var status = fnDate_hours();
 		var myCarrList;
 		var myPartList;
@@ -1474,6 +1482,7 @@
 	//right-dashboard
 	(function (){
 		var myChart = echarts.init(document.getElementById('right-dashboard'));
+		window.onresize = myChart.resize; 
 		var status = fnDate_hours();
 		//myChart.showLoading();  //加载效果
 		var status = fnDate_hours();
@@ -1481,11 +1490,12 @@
 			    title : {
 			        text: 'Carrier working hours distribution',
 			        textStyle : {
-			            color: '#fff'
+			            color: '#fff',
+			            fontSize:'14'
 			        }
 			    },
 			    grid: {
-				    left: '2%',
+				    left: '5%',
 					right: '2%',
 					bottom: '3%',
 					containLabel: true
@@ -1497,7 +1507,7 @@
 			    xAxis : [
 			        {
 			            type : 'category',
-			            data : ['2','4','6','8'],
+			            data : ['2h','4h','6h','8h'],
 			            axisLabel:{  
 		                    interval:0,  
 		                    rotate:0,//倾斜度 -90 至 90 默认为0  
@@ -1512,6 +1522,10 @@
 			    yAxis : [
 			        {
 			            type : 'value',
+			            name:'Total percentage',
+			            nameTextStyle:{
+			            	color:'#fff'
+			            },
 			            splitLine :{
 			            	show:true,
 			            	lineStyle:{
@@ -1629,12 +1643,14 @@
     //right-bar
 	(function (){
 		var myChart = echarts.init(document.getElementById('right-bar'));
+		window.onresize = myChart.resize; 
 		var status = fnDate_hours();
 		var option = {
 			    title : {
 			        text: 'Realtime Parcels Status',
 			        textStyle : {
-			            color: '#fff'
+			            color: '#fff',
+			            fontSize:'14'
 			        }
 			    },
 			    grid: {
@@ -1653,7 +1669,7 @@
 			            data : ['unattended','Pickup','Delivered'],
 			            axisLabel:{  
 		                    interval:0,  
-		                    rotate:-45,//倾斜度 -90 至 90 默认为0  
+		                    rotate:0,//倾斜度 -90 至 90 默认为0  
 		                    margin:5,  
 		                    textStyle:{  
 		                        fontWeight:"bolder",  
@@ -1665,6 +1681,10 @@
 			    yAxis : [
 			        {
 			            type : 'value',
+			            name:'No. of parcel',
+			            nameTextStyle:{
+			            	color:'#fff'
+			            },
 			            max: function(value) {
 						    return 10000;
 						},
@@ -1779,6 +1799,7 @@
 	//right-line
 	(function (){
 		var myChart = echarts.init(document.getElementById('right-line'));
+		window.onresize = myChart.resize; 
 		var status = fnDate_hours();
 		var date=new Date();
 		var minute=date.getMinutes();//分
@@ -1789,11 +1810,12 @@
 			    title : {
 			        text: 'New Parcels occurred of accumulative total',
 			        textStyle : {
-			            color: '#fff'
+			            color: '#fff',
+			            fontSize:'14'
 			        }
 			    },
 			    grid: {
-				    left: '2%',
+				    left: '5%',
 					right: '2%',
 					bottom: '3%',
 					containLabel: true
@@ -1819,6 +1841,10 @@
 			    yAxis : [
 			        {
 			            type : 'value',
+			            name:'Total parcel',
+			            nameTextStyle:{
+			            	color:'#fff'
+			            },
 			            splitLine :{
 			            	show:true,
 			            	lineStyle:{
