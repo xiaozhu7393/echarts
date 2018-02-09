@@ -161,7 +161,7 @@
 			        }
 			    },
 			    grid: {
-				    left: '5%',
+				    left: '6%',
 					right: '2%',
 					bottom: '3%',
 					containLabel: true
@@ -626,7 +626,7 @@
 			        }
 			    },
 			    grid: {
-				    left: '5%',
+				    left: '8%',
 					right: '2%',
 					bottom: '3%',
 					containLabel: true
