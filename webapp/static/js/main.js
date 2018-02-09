@@ -161,7 +161,7 @@
 			        }
 			    },
 			    grid: {
-				    left: '5%',
+				    left: '3%',
 					right: '2%',
 					bottom: '3%',
 					containLabel: true
@@ -192,6 +192,9 @@
 			        {
 			        	name:'No. of parcel',
 			            type : 'value',
+			            max:function (value){
+			            	return 100
+			            },
 			            nameTextStyle:{
 			            	color:"#fff",
 			            },
@@ -205,6 +208,7 @@
 			            },
 			            axisLabel:{  
 		                    margin:5,
+		                   	formatter: '{value} %',  //显示百分比
 		                    textStyle:{  
 		                        fontWeight:"bolder",  
 		                        color:"#fff"  
@@ -1495,7 +1499,7 @@
 			        }
 			    },
 			    grid: {
-				    left: '5%',
+				    left: '3%',
 					right: '2%',
 					bottom: '3%',
 					containLabel: true
@@ -1526,6 +1530,9 @@
 			            nameTextStyle:{
 			            	color:'#fff'
 			            },
+			            max: function(value) {
+						    return 100
+						},
 			            splitLine :{
 			            	show:true,
 			            	lineStyle:{
@@ -1686,7 +1693,7 @@
 			            	color:'#fff'
 			            },
 			            max: function(value) {
-						    return 10000;
+						    return 100;
 						},
 			            splitLine :{
 			            	show:true,
@@ -1698,6 +1705,7 @@
 			            },
 			            axisLabel:{  
 		                    margin:5,  
+		                    formatter: '{value} %',  //显示百分比
 		                    textStyle:{  
 		                        fontWeight:"bolder",  
 		                        color:"#fff"  

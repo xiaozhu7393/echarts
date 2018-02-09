@@ -46,8 +46,12 @@
 					<!--Parameters-->
 					<div>
 						<div class="box-show alt">
-							<h3>Parameters View</h3>
-							<button class="btn btn-primary alt" data-toggle="modal" data-target="#setModal"><i class="iconfont icon-setting"></i> Settings</button>
+							<header class="clearfix">
+								<h3 class="para-h3">Parameters View</h3>
+								<button class="btn btn-primary alt" data-toggle="modal" data-target="#setModal">
+									<i class="iconfont icon-setting"></i> Settings
+								</button>
+							</header>
 							<ul class="info-contect">
 								<li>No. of Normal Carrier : <span id="para_normal_carrier_num">--</span></li>
 								<li>No. of SwoT Carrier : <span id="para_SwoT_carrier_num">--</span></li>
@@ -65,12 +69,13 @@
 					<!---->
 					<div>
 						<div class="box-show alt">
-							<h3>Current Status</h3>
+							<h3 style="padding-left: 20px;">Current Status</h3>
 							<ul class="info-contect">
-								<li>NO. of working Carrier: <span>--</span></li>
-								<li>NO. of new demand: <span>--</span></li>
-								<li>Total income: <span>--</span></li>
-								<li>Total cost: <span>--</span></li>
+								<li>NO. of working Carrier : <span>--</span></li>
+								<li>NO. of new demand : <span>--</span></li>
+								<!--<li>Total income: <span>--</span></li>-->
+								<li>Cost/Parcel : <span>--</span></li>
+								<li>Cost/Hour : <span>--</span></li>
 							</ul>
 						</div>
 						<span class="line1 linealt"></span>
@@ -153,11 +158,11 @@
 			        		<h5 class="text-center">Parameters</h5>
 			        		<label class="para-info-title">Carrier</label>
 			        		<div class="form-group">
-							    <label for="">No. of Carrier <span style="color: red;">@1</span> : </label>
+							    <label for="">Normal Carrier : </label>
 							    <input type="text" class="form-control" id=""  />
 							</div>
 							<div class="form-group">
-							    <label for="">Capocity of Carrier: </label>
+							    <label for="">Capocity of Normal Carrier: </label>
 							    <input type="text" class="form-control" id=""  />
 							    <span> (pieces)</span>
 							</div>
@@ -167,23 +172,21 @@
 							    <span> (km/h)</span>
 							</div>
 							<div class="form-group">
-							    <label for="">Swot Carrier <span style="color: red;">@2</span> : </label>
+							    <label for="">SWOT Carrier : </label>
 							    <input type="text" class="form-control" id=""  />
 							    <span> (pieces)</span>
 							</div>
 							<div class="form-group">
-							    <label for="">Capocity of Swot Carrier : </label>
+							    <label for="">Capocity of SWOT Carrier : </label>
 							    <input type="text" class="form-control" id=""  />
 							</div>
 							<label class="para-info-title">Demand</label>
 							<div class="form-group">
 							    <label for="">Required shipping time : </label>
 							    <input type="text" class="form-control" id=""  />
+							    <span> (hours)</span>
 							</div>
 			        	</div>
-			        	<!--Remarks-->
-			        	<p><span style="color: red;">@1</span> normal carrier to deliver demands</p>
-			        	<p><span style="color: red;">@2</span> speclal carrier to deliver demand which expand the expected end time above 1.5 hours</p>
 			        </div>
 			        <div class="modal-footer">
 			        	<button type="button" class="btn btn-primary" id="save_para">Save changes</button>
