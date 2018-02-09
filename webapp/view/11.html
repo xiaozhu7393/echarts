@@ -1,106 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-    <!--<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-<script src="../static/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript" src="../static/js/echarts.js" ></script>
-<script type="text/javascript" src="../static/js/echarts-all.js" ></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
-   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
-   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
-   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
-   <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
-   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
-   <script type="text/javascript" src="http://echarts.baidu.com/resource/echarts-liquidfill-1.0.4/dist/echarts-liquidfill.js"></script>
-<script src="../static/js/main.js" type="text/javascript" charset="utf-8"></script>-->
-    <style>
-    *{margin:0;padding:0;}
-    li{list-style:none;}
-    canvas{background-color:black;}
-    </style>
-</head>
-<body>
-<canvas id='canvas' width=800 height=600></canvas>
-   <script>
-      var canvas=document.querySelector('canvas'),
-              context=canvas.getContext('2d'),
-              r=0;
-
-      var coor = [
-      {
-          "name":"start",
-          "X":100,
-          "Y":100
-      },{
-          "name":"end",
-          "X":500,
-          "Y":500
-      }
-      ];
-
-     //圆环
-      function change(context,r,option){
-          context.clearRect((r<option.X?option.X-r:0),(r<option.X?option.X-r:0),r*2,r*2);
-
-          //圆
-          context.beginPath();
-          context.arc(option.X,option.Y,r+=1,0,2*Math.PI);
-          context.closePath();
-          context.lineWidth = 3;
-          context.strokeStyle='rgba(247,226,88,'+(r>10?0:10/r)+')';
-          context.stroke();
-
-          //开启动画
-          var animationCouned = window.requestAnimationFrame(function(){
-             change(context,r,option)  
-            });
-
-          //清除动画和画布
-            if(r>=100){
-              window.cancelAnimationFrame(animationCouned);
-              context.clearRect(0,0,r,r);
-              r=0;
-          }
-      }
-      var speed = 3,
-              l = 0,
-              end = coor[1].X;
-      function lines(context,l){
-
-        context.clearRect(0,0,800,600);
-        l += speed;
-
-        context.beginPath(); 
-context.fillStyle="rgba(88,186,245,1)";
-context.lineWidth=1;/*边框的宽度*/
-context.beginPath(); 
-context.moveTo((l<60?100:l+40),(l<60?100:l+40));
-context.lineTo((l<(end-100)?(l+100):end),(l<(end-98)?(l+98):end)); 
-context.lineTo((l<(end-98)?(l+98):end),(l<(end-100)?(l+100):end)); 
-context.closePath();/*可选步骤，关闭绘制的路径*/ 
-context.stroke();
-context.fill();
-
-
-var animation2 = window.requestAnimationFrame(function(){
-        lines(context,l)  
-    });
-
-            //开始圆环动画
-        if (l>=80) {
-        	change(context,r,coor[0])
-        }
-        //结束圆环动画
-        if( (l+40)>=end ){
-          change(context,r,coor[1])
-          window.cancelAnimationFrame(animation2);
-        }
-      }
-      lines(context,l)
-
-              
-   </script>
-</body>
+<html>
+	<head>
+		<title></title>
+		<style type="text/css">
+			* {
+				box-sizing: border-box;
+			}
+			.div {
+				display: flex;
+				flex-wrap: wrap;
+				width: 100%;
+				height: 100%;
+			}
+			body,html{
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="div">
+			<div style="width: 25%;height: 25%;padding: 10px;">
+				<div style="width: 100%;height: 100%;background-color: #0062CC;"></div>
+			</div>
+			<div style="width: 25%;height: 25%;padding: 10px;">
+				<div style="width: 100%;height: 100%;background-color: #0062CC;"></div>
+			</div>
+			<div style="width: 25%;height: 25%;padding: 10px;">
+				<div style="width: 100%;height: 100%;background-color: #0062CC;"></div>
+			</div>
+			<div style="width: 25%;height: 25%;padding: 10px;">
+				<div style="width: 100%;height: 100%;background-color: #0062CC;"></div>
+			</div>
+			<div style="width: 25%;height: 25%;padding: 10px;">
+				<div style="width: 100%;height: 100%;background-color: #0062CC;"></div>
+			</div>
+			<div style="width: 25%;height: 25%;padding: 10px;">
+				<div style="width: 100%;height: 100%;background-color: #0062CC;"></div>
+			</div>
+			<div style="width: 25%;height: 25%;padding: 10px;">
+				<div style="width: 100%;height: 100%;background-color: #0062CC;"></div>
+			</div>
+		</div>
+		
+	</body>
 </html>
