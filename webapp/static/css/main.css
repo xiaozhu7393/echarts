@@ -217,6 +217,19 @@ body,html{
 .box-show.alt ul {
 	padding-left: 20px;
 }
+.e-tip {
+	padding: 0;
+	margin: 0;
+}
+.e-tip-point {
+	display:inline-block;
+	margin-right:5px;
+	border-radius:10px;
+	width:9px;
+	height:9px;
+	background-color:#358be3;
+}
+
 @media only screen and (min-width: 1400px ) {
 	.g-top h1 {
 		font-size: 1.3em;

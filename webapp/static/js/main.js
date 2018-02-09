@@ -161,13 +161,23 @@
 			        }
 			    },
 			    grid: {
-				    left: '3%',
+				    left: '5%',
 					right: '2%',
 					bottom: '3%',
 					containLabel: true
 				},
 			    tooltip : {
-			        trigger: 'axis'
+			        trigger: 'item',
+			        formatter: function (a) {
+			        	var add = '';
+			        	add+='<ul class="e-tip">';
+			        	add+='<li>'+a['name']+'</li>';
+			        	add+='<li><span class="e-tip-point"></span>'+a['value']+'</li>';
+			        	add+='<li><span class="e-tip-point"></span>'+a['data'].pp[0]+'</li>';
+			        	add+='</ul>';
+			        	
+                        return add;
+			        }
 			    },
 			    calculable : true,
 			    xAxis : [
@@ -192,9 +202,6 @@
 			        {
 			        	name:'No. of parcel',
 			            type : 'value',
-			            max:function (value){
-			            	return 100
-			            },
 			            nameTextStyle:{
 			            	color:"#fff",
 			            },
@@ -208,7 +215,6 @@
 			            },
 			            axisLabel:{  
 		                    margin:5,
-		                   	formatter: '{value} %',  //显示百分比
 		                    textStyle:{  
 		                        fontWeight:"bolder",  
 		                        color:"#fff"  
@@ -221,19 +227,49 @@
 			        {
 			            type:'bar',
 			            barWidth:30,
-			            data:["0",'0','0'],
+			            data:[
+							{name:'0.5h',pp:['0%'],value:0},
+							{name:'1h',pp:['0%'],value:0},
+							{name:'1.5h',pp:['0%'],value:0}
+						],
 			            itemStyle:{
 			                normal:{color:'#358be3'}
 			            }
 			        }
 			    ]
 			};
-		myChart.setOption(option);
-		var b = [["10",'5','1'],["4",'1','1'],["7",'1','1'],["4",'2','2'],["1",'2','0']];
+		myChart.setOption(option);["4",'1','1'],["7",'1','1'],["4",'2','2'],["1",'2','0']
+		var b = [
+			[
+				{name:'0.5h',pp:['60%'],value:10},
+				{name:'1h',pp:['30%'],value:5},
+				{name:'1.5h',pp:['10%'],value:1}
+			],[
+				{name:'0.5h',pp:['80%'],value:4},
+				{name:'1h',pp:['10%'],value:1},
+				{name:'1.5h',pp:['10%'],value:1}
+			],[
+				{name:'0.5h',pp:['90%'],value:7},
+				{name:'1h',pp:['5%'],value:1},
+				{name:'1.5h',pp:['5%'],value:1}
+			],[
+				{name:'0.5h',pp:['70%'],value:4},
+				{name:'1h',pp:['15%'],value:2},
+				{name:'1.5h',pp:['15%'],value:2}
+			],[
+				{name:'0.5h',pp:['34%'],value:1},
+				{name:'1h',pp:['66%'],value:2},
+				{name:'1.5h',pp:['0%'],value:0}
+			]
+		];
 		clearInterval(timeTicket6);
 		if (status) 
 		{
-			option.series[0].data = ["10",'5','1'];
+			option.series[0].data = [
+				{name:'0.5h',pp:['60%'],value:10},
+				{name:'1h',pp:['30%'],value:5},
+				{name:'1.5h',pp:['10%'],value:1}
+			];
 			myChart.setOption(option);
 			clearInterval(timeTicket6);
 			var timeTicket6 = setInterval(function (){
@@ -244,13 +280,21 @@
 			
 			setTimeout(function  () {
 				clearInterval(timeTicket6);
-				option.series[0].data = [0,0,0];
+				option.series[0].data = [
+					{name:'0.5h',pp:['0%'],value:0},
+					{name:'1h',pp:['0%'],value:0},
+					{name:'1.5h',pp:['0%'],value:0}
+				];
 			    myChart.setOption(option, true);
 			    
 			    clearInterval(timeTicket66_24);
 			    var timeTicket66_24 = setInterval(function  () {
 			    	setTimeout(function  () {
-			    		option.series[0].data = ["10",'5','1'];
+			    		option.series[0].data = [
+							{name:'0.5h',pp:['60%'],value:10},
+							{name:'1h',pp:['30%'],value:5},
+							{name:'1.5h',pp:['10%'],value:1}
+						];
 						myChart.setOption(option);
 						clearInterval(timeTicket6);
 						var timeTicket6 = setInterval(function (){
@@ -261,7 +305,11 @@
 						
 						setTimeout(function  () {
 							clearInterval(timeTicket6);
-							option.series[0].data = [0,0,0];
+							option.series[0].data = [
+								{name:'0.5h',pp:['0%'],value:0},
+								{name:'1h',pp:['0%'],value:0},
+								{name:'1.5h',pp:['0%'],value:0}
+							];
 						    myChart.setOption(option, true);
 						},28800000);
 			    	},57600000);
@@ -271,7 +319,11 @@
 		else
 		{
 			setTimeout(function (){
-				option.series[0].data = ["10",'5','1'];
+				option.series[0].data = [
+					{name:'0.5h',pp:['60%'],value:10},
+					{name:'1h',pp:['30%'],value:5},
+					{name:'1.5h',pp:['10%'],value:1}
+				];
 				myChart.setOption(option);
 				var timeTicket6 = setInterval(function (){
 					var i =Math.floor(Math.random()*5);
@@ -281,14 +333,22 @@
 				},60000);
 				setTimeout(function  () {
 					clearInterval(timeTicket6);
-					option.series[0].data = ["0",'0','0'];
+					option.series[0].data = [
+						{name:'0.5h',pp:['0%'],value:0},
+						{name:'1h',pp:['0%'],value:0},
+						{name:'1.5h',pp:['0%'],value:0}
+					];
 					myChart.setOption(option, true);
 				},28800000);
 				
 				
 				clearInterval(timeTicket6_24);
 				var timeTicket6_24 = setInterval(function  () {
-					option.series[0].data = ["10",'5','1'];
+					option.series[0].data = [
+						{name:'0.5h',pp:['60%'],value:10},
+						{name:'1h',pp:['30%'],value:5},
+						{name:'1.5h',pp:['10%'],value:1}
+					];
 					myChart.setOption(option);
 					clearInterval(timeTicket6);
 					var timeTicket6 = setInterval(function (){
@@ -299,7 +359,11 @@
 					},60000);
 					setTimeout(function  () {
 						clearInterval(timeTicket6);
-						option.series[0].data = ["0",'0','0'];
+						option.series[0].data = [
+							{name:'0.5h',pp:['0%'],value:0},
+							{name:'1h',pp:['0%'],value:0},
+							{name:'1.5h',pp:['0%'],value:0}
+						];
 						myChart.setOption(option, true);
 					},28800000);
 				},86400000);
@@ -1499,7 +1563,7 @@
 			        }
 			    },
 			    grid: {
-				    left: '3%',
+				    left: '5%',
 					right: '2%',
 					bottom: '3%',
 					containLabel: true
@@ -1530,9 +1594,6 @@
 			            nameTextStyle:{
 			            	color:'#fff'
 			            },
-			            max: function(value) {
-						    return 100
-						},
 			            splitLine :{
 			            	show:true,
 			            	lineStyle:{
@@ -1667,13 +1728,23 @@
 					containLabel: true
 				},
 			    tooltip : {
-			        trigger: 'axis'
+			        trigger: 'item',
+			        formatter: function (a) {
+			        	var add = '';
+			        	add+='<ul class="e-tip">';
+			        	add+='<li>'+a['name']+'</li>';
+			        	add+='<li><span class="e-tip-point"></span>'+a['value']+'</li>';
+			        	add+='<li><span class="e-tip-point"></span>'+a['data'].pp[0]+'</li>';
+			        	add+='</ul>';
+			        	
+                        return add;
+			        }
 			    },
 			    calculable : true,
 			    xAxis : [
 			        {
 			            type : 'category',
-			            data : ['unattended','Pickup','Delivered'],
+			            data : ['Unattended','Pickup','Delivered'],
 			            axisLabel:{  
 		                    interval:0,  
 		                    rotate:0,//倾斜度 -90 至 90 默认为0  
@@ -1693,7 +1764,7 @@
 			            	color:'#fff'
 			            },
 			            max: function(value) {
-						    return 100;
+						    return 10000;
 						},
 			            splitLine :{
 			            	show:true,
@@ -1705,7 +1776,6 @@
 			            },
 			            axisLabel:{  
 		                    margin:5,  
-		                    formatter: '{value} %',  //显示百分比
 		                    textStyle:{  
 		                        fontWeight:"bolder",  
 		                        color:"#fff"  
@@ -1717,7 +1787,11 @@
 			        {
 			            type:'bar',
 			            barWidth:30,
-			            data:["0",'0','0'],
+			            data:[
+			            	{name:'Unattended',pp:['0%'],value:0},
+							{name:'Pickup',pp:['0%'],value:0},
+							{name:'Delivered',pp:['0%'],value:0}
+						],
 			            itemStyle:{
 			                normal:{color:'#358be3'}
 			            }
@@ -1725,11 +1799,29 @@
 			    ]
 			};
 		myChart.setOption(option);
-		var b = [["2000",'2200','4232'],["2153",'2489','4015'],["2233",'2689','4215']];
+		var b = [
+			[
+				{name:'Unattended',pp:['20%'],value:2000},
+				{name:'Pickup',pp:['25%'],value:2200},
+				{name:'Delivered',pp:['50%'],value:4232}
+			],[
+				{name:'Unattended',pp:['18%'],value:2153},
+				{name:'Pickup',pp:['23%'],value:2489},
+				{name:'Delivered',pp:['52%'],value:4015}
+			],[
+				{name:'Unattended',pp:['14%'],value:2233},
+				{name:'Pickup',pp:['22%'],value:2689},
+				{name:'Delivered',pp:['57%'],value:4215}
+			]
+		];
 		clearInterval(timeTicket6);
 		if (status) 
 		{
-			option.series[0].data = ["2000",'2200','4232'];
+			option.series[0].data = [
+				{name:'Unattended',pp:['20%'],value:2000},
+				{name:'Pickup',pp:['25%'],value:2200},
+				{name:'Delivered',pp:['50%'],value:4232}
+			];
 			myChart.setOption(option);
 			clearInterval(timeTicket6);
 			var timeTicket6 = setInterval(function (){
@@ -1740,13 +1832,21 @@
 			
 			setTimeout(function  () {
 				clearInterval(timeTicket6);
-				option.series[0].data = [0,0,0];
+				option.series[0].data = [
+					{name:'Unattended',pp:['0%'],value:0},
+					{name:'Pickup',pp:['0%'],value:0},
+					{name:'Delivered',pp:['0%'],value:0}
+				];
 			    myChart.setOption(option, true);
 			    
 			    clearInterval(timeTicket66_24);
 			    var timeTicket66_24 = setInterval(function  () {
 			    	setTimeout(function  () {
-			    		option.series[0].data = ["2000",'2200','4232'];
+			    		option.series[0].data = [
+			    			{name:'Unattended',pp:['20%'],value:2000},
+							{name:'Pickup',pp:['25%'],value:2200},
+							{name:'Delivered',pp:['50%'],value:4232}
+			    		];
 						myChart.setOption(option);
 						clearInterval(timeTicket6);
 						var timeTicket6 = setInterval(function (){
@@ -1757,7 +1857,11 @@
 						
 						setTimeout(function  () {
 							clearInterval(timeTicket6);
-							option.series[0].data = [0,0,0];
+							option.series[0].data = [
+								{name:'Unattended',pp:['0%'],value:0},
+								{name:'Pickup',pp:['0%'],value:0},
+								{name:'Delivered',pp:['0%'],value:0}
+							];
 						    myChart.setOption(option, true);
 						},28800000);
 			    	},57600000);
@@ -1767,7 +1871,11 @@
 		else
 		{
 			setTimeout(function (){
-				option.series[0].data = ["2000",'2200','4232'];
+				option.series[0].data = [
+	    			{name:'Unattended',pp:['20%'],value:2000},
+					{name:'Pickup',pp:['25%'],value:2200},
+					{name:'Delivered',pp:['50%'],value:4232}
+	    		];
 				myChart.setOption(option);
 				var timeTicket6 = setInterval(function (){
 					var i =Math.floor(Math.random()*3);
@@ -1777,14 +1885,22 @@
 				},60000);
 				setTimeout(function  () {
 					clearInterval(timeTicket6);
-					option.series[0].data = ["0",'0','0'];
+					option.series[0].data = [
+						{name:'Unattended',pp:['0%'],value:0},
+						{name:'Pickup',pp:['0%'],value:0},
+						{name:'Delivered',pp:['0%'],value:0}
+					];
 					myChart.setOption(option, true);
 				},28800000);
 				
 				
 				clearInterval(timeTicket6_24);
 				var timeTicket6_24 = setInterval(function  () {
-					option.series[0].data = ["2000",'2200','4232'];
+					option.series[0].data = [
+		    			{name:'Unattended',pp:['20%'],value:2000},
+						{name:'Pickup',pp:['25%'],value:2200},
+						{name:'Delivered',pp:['50%'],value:4232}
+		    		];
 					myChart.setOption(option);
 					clearInterval(timeTicket6);
 					var timeTicket6 = setInterval(function (){
@@ -1795,7 +1911,11 @@
 					},60000);
 					setTimeout(function  () {
 						clearInterval(timeTicket6);
-						option.series[0].data = ["0",'0','0'];
+						option.series[0].data = [
+							{name:'Unattended',pp:['0%'],value:0},
+							{name:'Pickup',pp:['0%'],value:0},
+							{name:'Delivered',pp:['0%'],value:0}
+						];
 						myChart.setOption(option, true);
 					},28800000);
 				},86400000);
