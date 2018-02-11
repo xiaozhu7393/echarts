@@ -1166,7 +1166,7 @@
 				data:{"timeId":timeId},
 				async:true,
 				success:function  (data) {
-					////console.log(data);
+					//console.log(data);
 					clearInterval(timeTicketAjax);
 					clearInterval(timeTicket444);
 					count_line = 0;
@@ -1747,7 +1747,7 @@
 			            data : ['Unattended','Pickup','Delivered'],
 			            axisLabel:{  
 		                    interval:0,  
-		                    rotate:0,//倾斜度 -90 至 90 默认为0  
+		                    rotate:30,//倾斜度 -90 至 90 默认为0  
 		                    margin:5,  
 		                    textStyle:{  
 		                        fontWeight:"bolder",  
@@ -1799,128 +1799,41 @@
 			    ]
 			};
 		myChart.setOption(option);
-		var b = [
-			[
-				{name:'Unattended',pp:['20%'],value:2000},
-				{name:'Pickup',pp:['25%'],value:2200},
-				{name:'Delivered',pp:['50%'],value:4232}
-			],[
-				{name:'Unattended',pp:['18%'],value:2153},
-				{name:'Pickup',pp:['23%'],value:2489},
-				{name:'Delivered',pp:['52%'],value:4015}
-			],[
-				{name:'Unattended',pp:['14%'],value:2233},
-				{name:'Pickup',pp:['22%'],value:2689},
-				{name:'Delivered',pp:['57%'],value:4215}
-			]
-		];
-		clearInterval(timeTicket6);
-		if (status) 
-		{
-			option.series[0].data = [
-				{name:'Unattended',pp:['20%'],value:2000},
-				{name:'Pickup',pp:['25%'],value:2200},
-				{name:'Delivered',pp:['50%'],value:4232}
-			];
-			myChart.setOption(option);
-			clearInterval(timeTicket6);
-			var timeTicket6 = setInterval(function (){
-				var i =Math.floor(Math.random()*3);
-			    option.series[0].data = b[i];
-			    myChart.setOption(option, true);
-			},60000);
-			
-			setTimeout(function  () {
-				clearInterval(timeTicket6);
-				option.series[0].data = [
-					{name:'Unattended',pp:['0%'],value:0},
-					{name:'Pickup',pp:['0%'],value:0},
-					{name:'Delivered',pp:['0%'],value:0}
-				];
-			    myChart.setOption(option, true);
-			    
-			    clearInterval(timeTicket66_24);
-			    var timeTicket66_24 = setInterval(function  () {
-			    	setTimeout(function  () {
-			    		option.series[0].data = [
-			    			{name:'Unattended',pp:['20%'],value:2000},
-							{name:'Pickup',pp:['25%'],value:2200},
-							{name:'Delivered',pp:['50%'],value:4232}
-			    		];
-						myChart.setOption(option);
-						clearInterval(timeTicket6);
-						var timeTicket6 = setInterval(function (){
-							var i =Math.floor(Math.random()*3);
-						    option.series[0].data = b[i];
-						    myChart.setOption(option, true);
-						},60000);
-						
-						setTimeout(function  () {
-							clearInterval(timeTicket6);
-							option.series[0].data = [
-								{name:'Unattended',pp:['0%'],value:0},
-								{name:'Pickup',pp:['0%'],value:0},
-								{name:'Delivered',pp:['0%'],value:0}
-							];
-						    myChart.setOption(option, true);
-						},28800000);
-			    	},57600000);
-			    },86400000);
-			},i_time_18);
-		}
-		else
-		{
-			setTimeout(function (){
-				option.series[0].data = [
-	    			{name:'Unattended',pp:['20%'],value:2000},
-					{name:'Pickup',pp:['25%'],value:2200},
-					{name:'Delivered',pp:['50%'],value:4232}
-	    		];
-				myChart.setOption(option);
-				var timeTicket6 = setInterval(function (){
-					var i =Math.floor(Math.random()*3);
-				    option.series[0].data = b[i];
-				    
-				    myChart.setOption(option, true);
-				},60000);
-				setTimeout(function  () {
-					clearInterval(timeTicket6);
-					option.series[0].data = [
-						{name:'Unattended',pp:['0%'],value:0},
-						{name:'Pickup',pp:['0%'],value:0},
-						{name:'Delivered',pp:['0%'],value:0}
-					];
-					myChart.setOption(option, true);
-				},28800000);
-				
-				
-				clearInterval(timeTicket6_24);
-				var timeTicket6_24 = setInterval(function  () {
-					option.series[0].data = [
-		    			{name:'Unattended',pp:['20%'],value:2000},
-						{name:'Pickup',pp:['25%'],value:2200},
-						{name:'Delivered',pp:['50%'],value:4232}
-		    		];
+		function Parcels_status () {
+			$.post('http://39.108.208.44:8081/realtime_parcel').done(function  (res) {
+				console.log(res);
+				if (res.length != 0)
+				{
+					var sum=0;
+					var list = [];
+					var len = res.length;
+					for (var i=0;i<len;i++) 
+					{
+						sum = sum + Math.ceil(res[i].y);
+					}
+					var yy0 = Math.ceil(res[0].y);
+					var yy1 = Math.ceil(res[1].y);
+					var yy2 = Math.ceil(res[2].y);
+					var per0 = ( (yy0/sum).toFixed(4) )*100 + "%";
+					var per1 = ( (yy1/sum).toFixed(4) )*100 + "%";
+					var per2 = (100-(yy0/sum).toFixed(4)*100-(yy1/sum).toFixed(4)*100) + "%";
+					var add0 = {name:'Unattended',pp:[per0],value:yy0};
+					var add1 = {name:'Pickup',pp:[per1],value:yy1};
+					var add2 = {name:'Delivered',pp:[per2],value:yy2};
+					list.push(add0);
+					list.push(add1);
+					list.push(add2);
+					option.series[0].data = list;
 					myChart.setOption(option);
-					clearInterval(timeTicket6);
-					var timeTicket6 = setInterval(function (){
-						var i =Math.floor(Math.random()*3);
-					    option.series[0].data = b[i];
-					    
-					    myChart.setOption(option, true);
-					},60000);
-					setTimeout(function  () {
-						clearInterval(timeTicket6);
-						option.series[0].data = [
-							{name:'Unattended',pp:['0%'],value:0},
-							{name:'Pickup',pp:['0%'],value:0},
-							{name:'Delivered',pp:['0%'],value:0}
-						];
-						myChart.setOption(option, true);
-					},28800000);
-				},86400000);
-			},i_time);
-		}
+				}
+			});
+		};
+		Parcels_status();
+		clearInterval(time6);
+		var time6 = setInterval(function  () {
+			Parcels_status();
+		},300000);
+
 
 	}());
 	
